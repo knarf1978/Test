@@ -134,96 +134,87 @@ button{font:inherit;cursor:pointer}
 #zoomCtl button.fit{background:#fff;color:#111;border:1px solid #ddd;font-size:13px;font-weight:750;padding:0 14px}
 #zoomCtl button.fit.on{background:#eef6ff;border-color:#5b8def;color:#1a5fb4}
 
-/* Open-plan office */
-.building{position:absolute;transform-style:preserve-3d;left:-360px;top:-40px}
-.office{
-  position:absolute;width:780px;height:520px;transform-style:preserve-3d;
+#camera{top:50%;left:50%}
+/* ===== Office building (real-office look) ===== */
+.building{position:absolute;transform-style:preserve-3d}
+.office{position:absolute;transform-style:preserve-3d}
+.scenery,.actors{position:absolute;left:0;top:0;transform-style:preserve-3d}
+.pl{position:absolute;transform-style:preserve-3d}
+.slab{position:absolute;inset:0;border-radius:2px;
+  background-color:#c9ccd1;
+  background-image:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.0) 0 39px,rgba(80,86,96,.16) 39px 40px),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.0) 0 39px,rgba(80,86,96,.16) 39px 40px),
+    repeating-conic-gradient(#c3c7cd 0 25%,#cdd0d5 0 50%);
+  background-size:40px 40px,40px 40px,80px 80px;
+  box-shadow:0 0 0 2px #a8adb4, 0 18px 30px rgba(0,0,0,.10);
 }
-.slab{
-  position:absolute;inset:0;background:#d5d1c9;
-  border:1px solid #b9b4ab;border-radius:3px;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.28), 0 10px 22px rgba(0,0,0,.06);
-}
-.wall-back,.wall-left{
-  position:absolute;background:linear-gradient(180deg,#efece6,#ddd8cf);
-  border:1px solid #c7c2b8;
-}
-.wall-back{left:0;right:0;height:92px;bottom:100%;transform-origin:bottom;transform:rotateX(-90deg)}
-.wall-left{top:0;bottom:0;width:92px;right:100%;transform-origin:right;transform:rotateY(90deg)}
-.wall-back::after,.wall-left::after{
-  content:"";position:absolute;inset:12px 16px;border:1px solid rgba(0,0,0,.04);
-  background:repeating-linear-gradient(90deg,transparent,transparent 48px,rgba(0,0,0,.03) 48px,rgba(0,0,0,.03) 49px);
-}
-
-.team-rug{
-  position:absolute;border-radius:18px;opacity:.55;
-  border:2px dashed rgba(0,0,0,.08);transform:translateZ(1px);
-}
-.team-label{
-  position:absolute;transform:translateZ(2px) rotateZ(36deg) rotateX(-58deg);
-  background:#fff;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:800;
-  box-shadow:0 4px 12px rgba(0,0,0,.1);white-space:nowrap;pointer-events:none;
-}
-
-/* Glass corner office for Tinker */
-.glass-office{
-  position:absolute;width:210px;height:170px;transform-style:preserve-3d;left:18px;top:18px;
-}
-.glass-office .gfloor{
-  position:absolute;inset:0;background:rgba(180,210,240,.22);
-  border:2px solid rgba(120,160,200,.55);border-radius:6px;transform:translateZ(1px);
-}
-.glass-office .gback,.glass-office .gleft,.glass-office .gright{
-  position:absolute;background:linear-gradient(180deg,rgba(190,220,245,.35),rgba(160,195,230,.18));
-  border:1.5px solid rgba(100,150,200,.45);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);
-}
-.glass-office .gback{left:0;right:0;height:70px;bottom:100%;transform-origin:bottom;transform:rotateX(-90deg)}
-.glass-office .gleft{top:0;bottom:0;width:70px;right:100%;transform-origin:right;transform:rotateY(90deg)}
-.glass-office .gright{top:0;bottom:0;width:70px;left:100%;transform-origin:left;transform:rotateY(-90deg);opacity:.55}
-.glass-office .gtag{
-  position:absolute;left:12px;top:8px;transform:translateZ(4px) rotateZ(36deg) rotateX(-58deg);
-  background:#111;color:#fff;font-size:10px;font-weight:750;padding:3px 8px;border-radius:999px;
-}
-
-.desk{position:absolute;width:110px;height:68px;transform-style:preserve-3d}
-.desk .top{
-  position:absolute;inset:0;background:linear-gradient(135deg,#f6ead4,#e5d0ae);
-  border:1px solid #d2b98f;border-radius:4px;
-  box-shadow:0 1px 0 rgba(255,255,255,.55) inset;transform:translateZ(26px);
-}
-.desk .leg{position:absolute;width:7px;height:7px;background:#2a2a2a;bottom:0;transform:translateZ(0)}
-.desk .leg::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:26px;background:#1c1c1c;transform-origin:bottom;transform:rotateX(-90deg)}
-.desk .leg.a{left:6px;top:6px}.desk .leg.b{right:6px;top:6px}
-.desk .leg.c{left:6px;bottom:6px}.desk .leg.d{right:6px;bottom:6px}
-.desk .base{position:absolute;inset:0;background:#eceae6;border:1px solid #d8d4cc;border-radius:3px}
-.monitor{position:absolute;width:44px;height:6px;left:50%;top:10px;margin-left:-22px;transform-style:preserve-3d;transform:translateZ(26px)}
-.monitor .screen{
-  position:absolute;left:0;right:0;bottom:0;height:32px;background:#1a1f2a;
-  border:1px solid #0d1118;border-radius:3px;transform-origin:bottom;transform:rotateX(-78deg);
-  box-shadow:inset 0 0 0 1px #3a7bd5, 0 0 10px rgba(58,123,213,.35);
-}
-.monitor .stand{position:absolute;left:50%;margin-left:-5px;width:10px;height:8px;background:#333;top:0}
-.chair{position:absolute;width:36px;height:36px;transform-style:preserve-3d}
-.chair .seat{position:absolute;inset:5px;background:#1a1a1a;border-radius:4px;transform:translateZ(14px)}
-.chair .back{position:absolute;left:5px;right:5px;height:26px;bottom:100%;margin-bottom:-5px;background:#111;border-radius:4px 4px 0 0;transform-origin:bottom;transform:rotateX(-90deg) translateZ(5px)}
-
-.bot3d{
-  position:absolute;width:90px;height:90px;transform-style:preserve-3d;
-  transform:translateZ(44px);
-  pointer-events:none;
-  transition:left .9s linear, top .9s linear;
-}
-.bot3d.walking{transition:left 1.1s linear, top 1.1s linear}
-.bot3d .fig{
-  position:absolute;left:50%;top:50%;width:78px;height:78px;margin:-39px 0 0 -39px;
-  transform:rotateZ(36deg) rotateX(-58deg);
-}
-.bot3d.working .fig, .bot3d.typing .fig{animation:bob 1.1s ease-in-out infinite}
-.bot3d.walking .fig{animation:walkbob .45s ease-in-out infinite}
-@keyframes bob{0%,100%{transform:rotateZ(36deg) rotateX(-58deg) translateY(0)}50%{transform:rotateZ(36deg) rotateX(-58deg) translateY(-9px)}}
-@keyframes walkbob{0%,100%{transform:rotateZ(36deg) rotateX(-58deg) translateY(0)}50%{transform:rotateZ(36deg) rotateX(-58deg) translateY(-6px)}}
-.bot3d .body-shape{width:78px;height:78px;position:relative;filter:drop-shadow(0 4px 3px rgba(0,0,0,.22))}
+.fl{position:absolute}
+.fl-exec{background-color:#b9c3cf;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.08) 0 6px,transparent 6px 12px)}
+.fl-break{background-color:#d9c3a0;
+  background-image:repeating-linear-gradient(90deg,rgba(120,85,40,.18) 0 1px,transparent 1px 44px),
+  repeating-linear-gradient(0deg,rgba(120,85,40,.10) 0 1px,transparent 1px 15px),
+  linear-gradient(90deg,#dcc6a3,#d3ba93);background-size:44px 100%,100% 15px,100% 100%}
+.fl-aisle{background:#d9d6d0;background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.035) 0 1px,transparent 1px 30px)}
+.light{position:absolute;border-radius:50%;background:radial-gradient(closest-side,rgba(255,252,235,.55),rgba(255,252,235,0));pointer-events:none}
+.mat{position:absolute;border-radius:8px;opacity:.38}
+.wall{position:absolute;background:linear-gradient(0deg,#e9e6e0,#f4f2ee);border:1px solid #c9c4ba;overflow:hidden}
+.wall .base{position:absolute;left:0;right:0;bottom:0;height:8px;background:#9a958c}
+.wall.e .base{left:auto;top:0;bottom:0;right:0;width:8px;height:auto}
+.win{position:absolute;background:linear-gradient(180deg,#d7ecfb,#a8cde9);border:3px solid #7f8a95;border-radius:2px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.6)}
+.win::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent calc(50% - 1.5px),#7f8a95 calc(50% - 1.5px),#7f8a95 calc(50% + 1.5px),transparent calc(50% + 1.5px))}
+.wall.e .win::after{background:linear-gradient(0deg,transparent calc(50% - 1.5px),#7f8a95 calc(50% - 1.5px),#7f8a95 calc(50% + 1.5px),transparent calc(50% + 1.5px))}
+.wboard{position:absolute;background:#fff;border:4px solid #b9bec5;border-radius:3px;box-shadow:0 2px 0 #9aa0a8}
+.wboard i{position:absolute;height:3px;border-radius:2px;display:block}
+.glass{position:absolute;background:linear-gradient(0deg,rgba(185,215,240,.32),rgba(205,228,248,.18));border:2px solid rgba(105,135,165,.75);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
+.glass::after{content:"";position:absolute;left:0;right:0;top:40%;height:14%;background:rgba(255,255,255,.35)}
+.glass.e::after{top:0;bottom:0;left:40%;width:14%;height:auto}
+.bx{position:absolute;transform-style:preserve-3d}
+.bxt{position:absolute;inset:0}
+.bxs{position:absolute;left:0;right:0;top:100%;transform-origin:50% 0;transform:rotateX(90deg)}
+.bxw{position:absolute;top:0;bottom:0;right:100%;transform-origin:100% 50%;transform:rotateY(90deg)}
+.sign{position:absolute;transform:rotateZ(36deg) rotateX(-58deg);background:#111;color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;white-space:nowrap;pointer-events:none;box-shadow:0 3px 8px rgba(0,0,0,.18)}
+.team-label{position:absolute;transform:rotateZ(36deg) rotateX(-58deg);background:#fff;border-radius:999px;padding:4px 10px;font-size:11px;font-weight:800;box-shadow:0 3px 10px rgba(0,0,0,.12);white-space:nowrap;pointer-events:none}
+/* desks */
+.desk{position:absolute;width:110px;height:56px;transform-style:preserve-3d}
+.desk .top{position:absolute;inset:0;background:linear-gradient(135deg,#f3e7d2,#dcc6a2);border:1px solid #c4a77c;border-radius:3px;transform:translateZ(26px)}
+.desk .top.dark{background:linear-gradient(135deg,#7a5a40,#5b4130);border-color:#47321f}
+.desk .leg{position:absolute;width:5px;height:5px;background:#2a2a2a}
+.desk .leg::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:26px;background:#3a3a3a;transform-origin:bottom;transform:rotateX(-90deg)}
+.desk .leg.a{left:4px;top:4px}.desk .leg.b{right:4px;top:4px}.desk .leg.c{left:4px;bottom:4px}.desk .leg.d{right:4px;bottom:4px}
+.desk .kbd{position:absolute;left:36px;top:34px;width:34px;height:9px;background:#e9ebee;border:1px solid #b9bdc3;border-radius:2px;transform:translateZ(27px)}
+.desk .mug{position:absolute;left:88px;top:30px;width:8px;height:8px;border-radius:50%;background:#fff;border:2px solid #E5484D;transform:translateZ(28px)}
+.desk .papers{position:absolute;left:8px;top:28px;width:18px;height:14px;background:#fff;border:1px solid #ddd;transform:translateZ(27px) rotate(-8deg)}
+.monitor{position:absolute;width:46px;height:6px;left:50%;top:8px;margin-left:-23px;transform-style:preserve-3d;transform:translateZ(26px)}
+.monitor .screen{position:absolute;left:0;right:0;bottom:0;height:32px;background:#1a1f2a;border:2px solid #0d1118;border-radius:3px;transform-origin:bottom;transform:rotateX(-80deg);overflow:hidden}
+.monitor .screen::before{content:"";position:absolute;inset:3px;background:repeating-linear-gradient(180deg,rgba(120,200,255,.0) 0 3px,rgba(120,200,255,.0) 3px 6px)}
+.monitor.on .screen{box-shadow:0 0 10px rgba(58,160,255,.45);background:#10233b}
+.monitor.on .screen::before{background:repeating-linear-gradient(180deg,rgba(120,210,255,.75) 0 2px,transparent 2px 5px);background-size:60% 30px;background-repeat:repeat-y;animation:code 1.2s steps(6) infinite}
+@keyframes code{from{background-position:0 0}to{background-position:0 -30px}}
+.monitor .stand{position:absolute;left:50%;margin-left:-5px;width:10px;height:6px;background:#333;top:0}
+.chair{position:absolute;width:30px;height:30px;transform-style:preserve-3d}
+.chair .seat{position:absolute;inset:3px;background:#2b2f36;border-radius:5px;transform:translateZ(14px)}
+.chair .back{position:absolute;left:4px;right:4px;height:22px;bottom:100%;margin-bottom:-4px;background:#22252b;border-radius:4px 4px 0 0;transform-origin:bottom;transform:rotateX(-90deg) translateZ(4px)}
+/* break room */
+.ctable{position:absolute;border-radius:50%;background:radial-gradient(circle at 40% 35%,#2f8a5a,#1f6b44 70%,#18563a);border:4px solid #8a5a33;box-shadow:0 0 0 1px #5e3c20;transform-style:preserve-3d}
+.cardlayer{position:absolute;inset:0;transform-style:preserve-3d}
+.card{position:absolute;width:12px;height:17px;margin:-8px 0 0 -6px;background:#fff;border:1px solid #bbb;border-radius:2px;transform:translateZ(1px);transition:left .55s cubic-bezier(.3,.7,.3,1),top .55s cubic-bezier(.3,.7,.3,1),transform .55s}
+.card.back{background:repeating-linear-gradient(45deg,#2b5fb8 0 2px,#4b7fd8 2px 4px);border-color:#1e3f7a}
+.card.r::after,.card.b::after{content:"";position:absolute;left:3px;top:4px;width:5px;height:5px;transform:rotate(45deg)}
+.card.r::after{background:#E5484D}.card.b::after{background:#222;border-radius:50%;transform:none}
+.card.flip{animation:flip .6s ease-in-out}
+@keyframes flip{0%{transform:translateZ(1px) rotateY(0)}50%{transform:translateZ(6px) rotateY(90deg)}100%{transform:translateZ(1px) rotateY(0)}}
+.counter-sink{position:absolute;background:#c5ccd3;border:2px solid #9aa3ad;border-radius:3px}
+/* bots */
+.bot3d{position:absolute;width:90px;height:90px;margin:-45px 0 0 -45px;transform-style:preserve-3d;transform:translateZ(44px);pointer-events:none}
+.bot3d .fig{position:absolute;left:50%;top:50%;width:78px;height:78px;margin:-39px 0 0 -39px;transform:rotateZ(36deg) rotateX(-58deg)}
+.bot3d.working .fig{animation:bob 1.1s ease-in-out infinite}
+.bot3d.walking .fig{animation:walkbob .42s ease-in-out infinite}
+.bot3d.turn .fig{animation:hop .5s ease-out 1}
+@keyframes bob{0%,100%{transform:rotateZ(36deg) rotateX(-58deg) translateY(0)}50%{transform:rotateZ(36deg) rotateX(-58deg) translateY(-8px)}}
+@keyframes walkbob{0%,100%{transform:rotateZ(36deg) rotateX(-58deg) translateY(0) rotate(0)}25%{transform:rotateZ(36deg) rotateX(-58deg) translateY(-5px) rotate(-4deg)}75%{transform:rotateZ(36deg) rotateX(-58deg) translateY(-5px) rotate(4deg)}}
+@keyframes hop{0%,100%{transform:rotateZ(36deg) rotateX(-58deg) translateY(0)}40%{transform:rotateZ(36deg) rotateX(-58deg) translateY(-12px)}}
+.bot3d .body-shape{width:78px;height:78px;position:relative;filter:drop-shadow(0 4px 3px rgba(0,0,0,.22));transform:scale(.8);transform-origin:50% 100%}
 .bot3d .body-shape svg{width:78px;height:78px;display:block}
 .bot3d .eyes{position:absolute;left:0;right:0;top:30px;display:flex;justify-content:center;gap:12px}
 .bot3d .eyes i{width:7px;height:7px;border-radius:50%;background:#111;display:block}
@@ -233,41 +224,34 @@ button{font:inherit;cursor:pointer}
 .bot3d .acc.glasses::before{left:0}.bot3d .acc.glasses::after{right:0;border-right:0;border-left:3px solid #222}
 .bot3d .acc.antenna{left:50%;margin-left:-2px;top:-20px;width:4px;height:24px;background:#333;border-radius:2px}
 .bot3d .acc.antenna::after{content:"";position:absolute;left:-5px;top:-7px;width:14px;height:14px;border-radius:50%;background:#E5484D;box-shadow:0 0 0 2px #fff}
-.bot3d .sdot{
-  position:absolute;left:50%;top:-20px;width:18px;height:18px;margin-left:-9px;border-radius:50%;
-  border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.28);z-index:3;
-}
+.bot3d .sdot{position:absolute;left:50%;top:9px;width:18px;height:18px;margin-left:-9px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.28);z-index:3}
 .bot3d .sdot.working{background:var(--green)}
 .bot3d .sdot.waiting_user{background:var(--yellow)}
 .bot3d .sdot.error{background:var(--red)}
 .bot3d .sdot.done,.bot3d .sdot.idle{background:var(--grey)}
-
 .empty-hint{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);color:#8a857c;font-size:14px;text-align:center;z-index:5;pointer-events:none}
-
-#bubbleLayer{position:absolute;inset:0;pointer-events:none;z-index:25;overflow:visible}
+/* captions: persistent nodes, positioned by transform, never rebuilt per frame */
+#bubbleLayer{position:absolute;inset:0;pointer-events:none;z-index:25;overflow:hidden}
+.bub{position:absolute;left:0;top:0;will-change:transform;pointer-events:none}
+.leader{position:absolute;left:0;top:0;height:2px;background:rgba(17,17,17,.55);transform-origin:0 50%;border-radius:2px;pointer-events:none}
 .hud-bubble{
-  position:absolute;transform:translate(-50%,-100%);
-  background:#fff;color:#111;border-radius:14px;padding:10px 14px;
-  font-size:13px;font-weight:700;line-height:1.25;
-  box-shadow:0 10px 28px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.05);
-  white-space:nowrap;max-width:210px;pointer-events:none;
-  animation:hudpop .35s cubic-bezier(.2,1.4,.4,1) both;
+  position:absolute;left:0;top:0;transform:translate(-50%,-100%);
+  background:#fff;color:#111;border-radius:12px;padding:7px 11px;
+  font-size:12px;font-weight:700;line-height:1.25;
+  box-shadow:0 8px 22px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.06);
+  white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis;pointer-events:none;
+  animation:hudpop .3s cubic-bezier(.2,1.4,.4,1) 1 both;
 }
-.hud-bubble::after{
-  content:"";position:absolute;left:50%;bottom:-6px;margin-left:-6px;
-  width:12px;height:12px;background:#fff;transform:rotate(45deg);
-  box-shadow:2px 2px 3px rgba(0,0,0,.04);
-}
-.hud-bubble.need{white-space:normal;text-align:center;min-width:148px;padding:12px 14px;pointer-events:auto}
-.hud-bubble.need .who{margin-bottom:8px;font-size:13px}
+.hud-bubble::after{content:"";position:absolute;left:50%;bottom:-5px;margin-left:-5px;width:10px;height:10px;background:inherit;transform:rotate(45deg)}
+.bub.lifted .hud-bubble::after{display:none}
+.hud-bubble.need{white-space:normal;text-align:center;min-width:140px;padding:10px 12px;pointer-events:auto;overflow:visible}
+.hud-bubble.need .who{margin-bottom:7px;font-size:12px}
 .hud-bubble .btn{pointer-events:auto}
-.hud-bubble.check{font-size:12px;padding:8px 12px;background:#111;color:#fff}
-.hud-bubble.check::after{background:#111}
-.hud-bubble.visit-ask{background:#111;color:#fff}
-.hud-bubble.visit-ask::after{background:#111}
-.hud-bubble.visit-reply{background:#fff;color:#111}
-@keyframes hudpop{0%{opacity:0;transform:translate(-50%,-90%) scale(.7)}100%{opacity:1;transform:translate(-50%,-100%) scale(1)}}
-
+.hud-bubble.check{background:#111;color:#fff}
+.hud-bubble.ask{background:#111;color:#fff;font-size:13px}
+.hud-bubble.reply{background:#fff;color:#111;font-size:13px;box-shadow:0 8px 22px rgba(0,0,0,.22),0 0 0 2px #14C16F}
+.hud-bubble.err{color:#E5484D}
+@keyframes hudpop{0%{transform:translate(-50%,-92%) scale(.85)}100%{transform:translate(-50%,-100%) scale(1)}}
 @media (max-width:699px){
   html,body{height:auto;min-height:100%;overflow:auto;-webkit-overflow-scrolling:touch}
   body{padding:0 0 28px;display:flex;flex-direction:column;align-items:stretch}
@@ -284,7 +268,7 @@ button{font:inherit;cursor:pointer}
     position:relative;inset:auto;order:2;height:45vh;min-height:280px;max-height:420px;margin:12px;border-radius:16px;
     overflow:hidden;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04);touch-action:none;
   }
-  #camera{top:58%}
+
   #zoomCtl{right:10px;bottom:10px}
   #zoomCtl button{min-width:44px;min-height:44px}
   #msg{position:fixed;left:12px;right:12px;top:auto;bottom:24px;transform:none;max-width:none;z-index:70;order:5}
@@ -365,46 +349,65 @@ button{font:inherit;cursor:pointer}
 
 <script>
 const DEMO = new URLSearchParams(location.search).has('demo');
-const FORCE_WALK = new URLSearchParams(location.search).has('walk'); // screenshot helper
 const topic = DEMO ? '' : location.hash.slice(1);
 const FLOOR_COLORS = ['#5b8def','#14C16F','#FD690F','#9B59B6','#E5484D','#1E86FC','#F59312'];
 const SUPERVISOR = 'Tinker';
-const OFFICE = {w:780, h:520};
-const TINKER_DESK = {x:55, y:55}; // inside glass office
-const TINKER_DOOR = {x:200, y:150};
+/* ---------- floor plan (world units; viewer looks from the south-west corner) ---------- */
+const W = 1010, H = 650, WALL_H = 110;
+const P = (x,y)=>({x,y});
+const HUB = P(300,360);              // main aisle junction
+const BDOOR = P(300,425);            // just inside the break-room door
+const TABLE = {x:150, y:530, r:46};  // card table
+const WALK_SPEED = 135;              // units per second
+const DESK_COLS = [380,540,700,860], DESK_ROWS = [30,190,440];
+const TINKER_HOME = [HUB, P(300,150), P(200,150), P(100,150), P(100,125)];
+// Break-room spots: 0-3 card table (N,E,S,W), 4-6 couch, 7-8 overflow
+const BREAK_SPOTS = [
+  {p:P(150,462), path:[BDOOR,P(150,462)],                          stand:[BDOOR,P(218,452)], table:true, dir:P(0,-1)},
+  {p:P(220,530), path:[BDOOR,P(262,470),P(220,530)],               stand:[BDOOR,P(262,470),P(266,552)], table:true, dir:P(1,0)},
+  {p:P(150,600), path:[BDOOR,P(262,470),P(262,604),P(150,602)],    stand:[BDOOR,P(262,470),P(262,606),P(214,630)], table:true, dir:P(0,1)},
+  {p:P(80,530),  path:[BDOOR,P(110,446),P(80,530)],                stand:[BDOOR,P(110,446),P(46,478)], table:true, dir:P(-1,0)},
+  {p:P(316,505), path:[BDOOR,P(270,470),P(270,505),P(316,505)],    stand:[BDOOR,P(270,470),P(266,512)]},
+  {p:P(316,550), path:[BDOOR,P(270,470),P(270,550),P(316,550)],    stand:[BDOOR,P(270,470),P(266,557)]},
+  {p:P(316,595), path:[BDOOR,P(270,470),P(270,595),P(316,595)],    stand:[BDOOR,P(270,470),P(266,602)]},
+  {p:P(40,600),  path:[BDOOR,P(262,470),P(262,632),P(70,632),P(40,600)], stand:[BDOOR,P(262,470),P(262,632),P(96,634)]},
+  {p:P(95,636),  path:[BDOOR,P(262,470),P(262,636),P(95,636)],     stand:[BDOOR,P(262,470),P(262,636),P(140,640)]},
+];
 
-const st = {roster:[], groups:{}, chat:{}, looks:{}, status:{}, routines:{}, usage:null, activity:[]};
+const st = {roster:[], groups:{}, chat:{}, looks:{}, status:{}, routines:{}, usage:null, activity:[], assignAt:{}};
 let selectedTeam = null;
-const cam = {
-  mode: (window.matchMedia('(max-width:699px)').matches ? 'fit' : 'fit'),
-  scale: 1, x: 0, y: 0
-};
-const deskPos = {}; // bot -> {x,y} desk origin
-let tinkerState = {mode:'sit', target:null, checkUntil:0, route:[], routeIdx:0};
-let walkTimer = null;
-let lastBuildSig = '';
+const cam = {mode:'fit', scale:1, x:0, y:0};
 const pageLoadAt = Date.now();
 const seenVisitIds = (()=>{ try{ return new Set(JSON.parse(localStorage.getItem('hqSeenVisits')||'[]')); }catch(e){ return new Set(); } })();
-function saveSeenVisits(){ try{ localStorage.setItem('hqSeenVisits', JSON.stringify(Array.from(seenVisitIds).slice(-200))); }catch(e){} }
-const seenVisitLog = new Set();
-let visitQueue = [];
-let tinkerPos = {x: TINKER_DESK.x + 18, y: TINKER_DESK.y + 8};
-function botDomId(name){ return 'bot-' + String(name).replace(/\s+/g, '_'); }
-function resolveWorkerName(name){
-  const lower = String(name||'').toLowerCase();
-  return workers().find(w => w.toLowerCase() === lower) || null;
-}
-function isVisitMode(m){ return typeof m === 'string' && m.indexOf('visit_') === 0; }
+function saveSeenVisits(){ try{ localStorage.setItem('hqSeenVisits', JSON.stringify(Array.from(seenVisitIds).slice(-300))); }catch(e){} }
+const taskQueue = [];          // {type:'visit'|'assign', target}
+const heldNames = new Map();   // name -> count of pending visit/assign tasks (bot waits where it is)
+const agents = {};             // name -> walking actor
+const breakSeat = {};          // name -> BREAK_SPOTS index
+const captions = {};           // name -> {text, kind}  (scripted lines: ask / reply / check)
+const deskSlots = {};          // name -> {desk, seat, wxL, wxR, team, color}
+let lastSceneSig = '';
+let actorsReady = false;
 
+function botDomId(name){ return 'bot-' + String(name).replace(/[^A-Za-z0-9_-]/g, '_'); }
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function statusLabel(s){
-  return ({working:'Working',waiting_user:'Waiting',error:'Error',done:'Done',idle:'Idle'})[s]||(s||'Unknown');
-}
+function statusLabel(s){ return ({working:'Working',waiting_user:'Waiting',error:'Error',done:'Done',idle:'Idle'})[s]||(s||'Unknown'); }
 function isNarrow(){ return window.matchMedia('(max-width:699px)').matches; }
+function workers(){ return st.roster.filter(b=>b!==SUPERVISOR); }
+function resolveWorkerName(name){ const l=String(name||'').toLowerCase(); return workers().find(w=>w.toLowerCase()===l)||null; }
+function truncateStep(step){ const s=String(step||'').trim(); if(!s) return 'all good 👍'; return s.length>40 ? s.slice(0,37)+'...' : s; }
+
+/* Effective status: a Tinker assignment newer than the bot's last status line counts as "working". */
+function effStatus(name, ignoreAssign){
+  const s = st.status[name], a = st.assignAt[name];
+  if(!ignoreAssign && a && (!s || a.time >= s.time)) return {status:'working', step:a.task||'new job from Tinker', time:a.time};
+  return s ? {status:s.status, step:s.step||'', time:s.time} : {status:'', step:'', time:0};
+}
+function isDeskStatus(s){ return s==='working'||s==='waiting_user'||s==='error'; }
+function activeWorkers(){ return workers().filter(b=>isDeskStatus(effStatus(b).status)); }
 
 function shapeSVG(shape, color, size){
-  const c = color || '#959595';
-  const s = size || 28;
+  const c = color || '#959595'; const s = size || 28;
   if(shape==='star4') return `<svg viewBox="0 0 28 28" width="${s}" height="${s}"><path fill="${esc(c)}" d="M14 1.5 L17.2 10.8 L27 14 L17.2 17.2 L14 26.5 L10.8 17.2 L1 14 L10.8 10.8 Z"/></svg>`;
   if(shape==='hexagon') return `<svg viewBox="0 0 28 28" width="${s}" height="${s}"><path fill="${esc(c)}" d="M14 2 L25 8.5 L25 19.5 L14 26 L3 19.5 L3 8.5 Z"/></svg>`;
   if(shape==='square') return `<svg viewBox="0 0 28 28" width="${s}" height="${s}"><rect x="4" y="4" width="20" height="20" rx="4" fill="${esc(c)}"/></svg>`;
@@ -426,13 +429,9 @@ function apply(d, time){
     if(st.activity.length>40) st.activity.length=40;
   }
 }
-
 function teamsMap(){
   const teams = {};
-  for(const b of st.roster){
-    const g = st.groups[b] || 'Other';
-    (teams[g] = teams[g] || []).push(b);
-  }
+  for(const b of st.roster){ const g = st.groups[b] || 'Other'; (teams[g] = teams[g] || []).push(b); }
   const prefer = ['Ops','Testing'];
   const keys = Object.keys(teams).sort((a,b)=>{
     if(a==='Other') return 1; if(b==='Other') return -1;
@@ -442,556 +441,559 @@ function teamsMap(){
   });
   return {teams, keys};
 }
-
-function workers(){ return st.roster.filter(b=>b!==SUPERVISOR); }
-function activeWorkers(){
-  return workers().filter(b=>{
-    const s=(st.status[b]||{}).status;
-    return s==='working'||s==='waiting_user'||s==='error';
-  });
-}
-function nyTime(ts){
-  try{return new Date(ts*1000).toLocaleTimeString('en-US',{timeZone:'America/New_York',hour:'2-digit',minute:'2-digit',hour12:false});}
-  catch(e){return '--:--'}
-}
-function nyClock(){
-  try{return new Date().toLocaleTimeString('en-US',{timeZone:'America/New_York',hour:'2-digit',minute:'2-digit',hour12:false});}
-  catch(e){return '--:--'}
-}
+function nyTime(ts){ try{return new Date(ts*1000).toLocaleTimeString('en-US',{timeZone:'America/New_York',hour:'2-digit',minute:'2-digit',hour12:false});}catch(e){return '--:--'} }
+function nyClock(){ try{return new Date().toLocaleTimeString('en-US',{timeZone:'America/New_York',hour:'2-digit',minute:'2-digit',hour12:false});}catch(e){return '--:--'} }
 function resetsIn(iso){
-  if(!iso) return '—';
-  const t = new Date(iso).getTime() - Date.now();
-  if(isNaN(t)) return '—';
-  if(t<=0) return 'soon';
+  if(!iso) return '—'; const t = new Date(iso).getTime() - Date.now();
+  if(isNaN(t)) return '—'; if(t<=0) return 'soon';
   const d=Math.floor(t/86400000), h=Math.floor((t%86400000)/3600000);
   return d>0 ? `${d}d ${h}h` : `${h}h`;
 }
 function counts(){
   let w=0,wait=0,err=0,rest=0;
-  for(const b of st.roster){
-    const s=(st.status[b]||{}).status;
-    if(s==='working') w++; else if(s==='waiting_user') wait++; else if(s==='error') err++; else rest++;
-  }
+  for(const b of st.roster){ const s=effStatus(b).status;
+    if(s==='working') w++; else if(s==='waiting_user') wait++; else if(s==='error') err++; else rest++; }
   return {w,wait,err,rest};
 }
 
+/* ---------- desk layout (team order, 4 desks per row) ---------- */
 function layoutDesks(){
-  // Assign desk positions: Tinker in glass office; workers in team clusters on open floor
   const {teams, keys} = teamsMap();
-  const pos = {};
-  pos[SUPERVISOR] = {x:TINKER_DESK.x, y:TINKER_DESK.y, seat:{x:TINKER_DESK.x+18, y:TINKER_DESK.y+8}};
-  // Worker area starts right of glass office
-  let clusterX = 250;
-  const clusterY0 = 40;
+  for(const k in deskSlots) delete deskSlots[k];
+  let i = 0;
   keys.forEach((g, ti)=>{
-    const bots = (teams[g]||[]).filter(b=>b!==SUPERVISOR);
-    if(!bots.length && !(teams[g]||[]).includes(SUPERVISOR)) {
-      // empty team of only supervisor already placed
-    }
-    const cols = Math.min(3, Math.max(1, bots.length));
-    bots.forEach((name,i)=>{
-      const c = i % cols;
-      const r = Math.floor(i / cols);
-      const x = clusterX + c * 150;
-      const y = clusterY0 + r * 150 + (ti%2)*20;
-      pos[name] = {x, y, seat:{x:x+18, y:y+6}, team:g, teamIdx:ti};
+    (teams[g]||[]).filter(b=>b!==SUPERVISOR).forEach(name=>{
+      const c = i % DESK_COLS.length, r = Math.floor(i / DESK_COLS.length) % DESK_ROWS.length;
+      const desk = P(DESK_COLS[c], DESK_ROWS[r]);
+      deskSlots[name] = {desk, seat:P(desk.x+55, desk.y+92), wxL:desk.x-25, wxR:desk.x+135, team:g, color:FLOOR_COLORS[ti % FLOOR_COLORS.length], idx:i};
+      i++;
     });
-    const rows = Math.max(1, Math.ceil(bots.length/cols));
-    // next cluster to the right, wrap down if needed
-    clusterX += cols * 150 + 40;
-    if(clusterX > 620){ clusterX = 250; }
   });
-  // Any unknown workers without team assignment leftover
-  workers().forEach((name,i)=>{
-    if(pos[name]) return;
-    pos[name] = {x:260 + (i%4)*150, y:220 + Math.floor(i/4)*150, seat:{x:0,y:0}, team:'Other'};
-    pos[name].seat = {x:pos[name].x+18, y:pos[name].y+6};
-  });
-  Object.keys(pos).forEach(k=>{ deskPos[k]=pos[k]; });
-  return pos;
+}
+function deskLoc(name){
+  const s = deskSlots[name]; if(!s) return null;
+  return {key:'desk:'+name, entry:[HUB, P(s.wxL,HUB.y), P(s.wxL,s.seat.y), s.seat]};
+}
+function deskBesideLoc(name){
+  const s = deskSlots[name]; if(!s) return null;
+  return {key:'beside-desk:'+name, entry:[HUB, P(s.wxR,HUB.y), P(s.wxR,s.seat.y)]};
+}
+function breakLoc(i){ return {key:'break:'+i, entry:[HUB].concat(BREAK_SPOTS[i].path)}; }
+function breakStandLoc(i){ return {key:'stand:'+i, entry:[HUB].concat(BREAK_SPOTS[i].stand)}; }
+function homeLoc(){ return {key:'home', entry:TINKER_HOME}; }
+function seatFor(name){
+  if(breakSeat[name]!=null) return breakSeat[name];
+  const used = new Set(Object.values(breakSeat));
+  for(let i=0;i<BREAK_SPOTS.length;i++) if(!used.has(i)){ breakSeat[name]=i; return i; }
+  breakSeat[name] = BREAK_SPOTS.length-1; return breakSeat[name];
+}
+function besideLocFor(name){
+  const a = agents[name]; if(!a) return null;
+  if(a.key && a.key.indexOf('break:')===0) return breakStandLoc(Number(a.key.slice(6)));
+  return deskBesideLoc(name);
+}
+function desiredLoc(name){
+  const s = effStatus(name, heldNames.has(name)).status;
+  if(isDeskStatus(s)){ delete breakSeat[name]; return deskLoc(name); }
+  return breakLoc(seatFor(name));
 }
 
-function deskHTML(x,y){
-  return `<div class="desk" style="left:${x}px;top:${y}px"><div class="base"></div><div class="leg a"></div><div class="leg b"></div><div class="leg c"></div><div class="leg d"></div><div class="top"></div><div class="monitor"><div class="stand"></div><div class="screen"></div></div></div>`+
-    `<div class="chair" style="left:${x+38}px;top:${y+64}px"><div class="seat"></div><div class="back"></div></div>`;
+/* ---------- scenery (rebuilt only when the roster/teams change; actors live in their own layer) ---------- */
+function box(x,y,w,h,z,ht,top,south,west,inner,cls){
+  return `<div class="bx ${cls||''}" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;transform:translateZ(${z}px)">`+
+    `<div class="bxs" style="height:${ht}px;background:${south}"></div>`+
+    `<div class="bxw" style="width:${ht}px;background:${west}"></div>`+
+    `<div class="bxt" style="background:${top};transform:translateZ(${ht}px)">${inner||''}</div></div>`;
+}
+function wallS(x,y,len,ht,cls,inner){ return `<div class="${cls}" style="left:${x}px;top:${y-ht}px;width:${len}px;height:${ht}px;transform-origin:50% 100%;transform:rotateX(-90deg)">${inner||''}</div>`; }
+function wallE(x,y,len,ht,cls,inner){ return `<div class="${cls}" style="left:${x-ht}px;top:${y}px;width:${ht}px;height:${len}px;transform-origin:100% 50%;transform:rotateY(90deg)">${inner||''}</div>`; }
+function fl(x,y,w,h,cls,z){ return `<div class="fl ${cls}" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;transform:translateZ(${z||0.6}px)"></div>`; }
+function lightPool(x,y,r){ return `<div class="light" style="left:${x-r}px;top:${y-r}px;width:${2*r}px;height:${2*r}px;transform:translateZ(1px)"></div>`; }
+function billboard(x,y,z,w,h,inner){ return `<div class="pl" style="left:${x-w/2}px;top:${y-h/2}px;width:${w}px;height:${h}px;transform:translateZ(${z}px)"><div style="position:absolute;inset:0;transform:rotateZ(36deg) rotateX(-58deg)">${inner}</div></div>`; }
+function plant(x,y){
+  return box(x,y,22,22,0,16,'#a0522d','#8b4513','#7a3d10')+
+    billboard(x+11,y+11,40,40,46,`<div style="position:absolute;inset:0;border-radius:50% 50% 45% 45%;background:radial-gradient(circle at 35% 30%,#7ccf6a,#3f9a3c 55%,#2d7a2e)"></div>`);
+}
+function sign(x,y,z,text,bg){ return `<div class="sign" style="left:${x}px;top:${y}px;transform:translateZ(${z}px) rotateZ(36deg) rotateX(-58deg);${bg?'background:'+bg:''}">${esc(text)}</div>`; }
+function deskHTML(x,y,w,monId,dark){
+  return `<div class="desk" style="left:${x}px;top:${y}px;width:${w}px">`+
+    `<div class="leg a"></div><div class="leg b"></div><div class="leg c"></div><div class="leg d"></div>`+
+    `<div class="top${dark?' dark':''}"></div><div class="papers"></div><div class="kbd" style="left:${w/2-17}px"></div><div class="mug" style="left:${w-22}px"></div>`+
+    `<div class="monitor"${monId?` id="${monId}"`:''}><div class="stand"></div><div class="screen"></div></div></div>`;
+}
+function chairHTML(cx,cy){ return `<div class="chair" style="left:${cx-15}px;top:${cy-15}px"><div class="seat"></div><div class="back"></div></div>`; }
+
+function sceneHTML(){
+  let h = `<div class="slab"></div>`;
+  // floors: exec carpet, break-room planks, aisles
+  h += fl(0,0,230,200,'fl-exec') + fl(0,390,340,H-390,'fl-break') + fl(240,335,W-240,50,'fl-aisle') + fl(275,0,50,335,'fl-aisle');
+  // ceiling-light hints (soft pools on the floor)
+  [[115,100,80],[460,140,90],[780,140,90],[460,520,90],[780,520,90],[170,520,95],[620,360,70]].forEach(a=>h+=lightPool(a[0],a[1],a[2]));
+  // outer walls with windows (north and east; the near walls are cut away)
+  let nw = '';
+  [20,100,250,330,680,760,840,920].forEach(x=> nw += `<div class="win" style="left:${x}px;top:20px;width:64px;height:52px"></div>`);
+  nw += `<div class="wboard" style="left:440px;top:16px;width:200px;height:62px"><i style="left:14px;top:12px;width:90px;background:#1E86FC"></i><i style="left:14px;top:24px;width:130px;background:#333"></i><i style="left:14px;top:36px;width:70px;background:#E5484D"></i><i style="left:120px;top:38px;width:50px;background:#14C16F"></i></div>`;
+  nw += `<div class="base"></div>`;
+  h += wallS(0,0,W,WALL_H,'wall',nw);
+  let ew = '';
+  for(let y=30;y<H-60;y+=86) ew += `<div class="win" style="left:20px;top:${y}px;width:52px;height:64px"></div>`;
+  ew += `<div class="base"></div>`;
+  h += wallE(W,0,H,WALL_H,'wall e',ew);
+
+  // Tinker's glass office (door gap on the east side, y 120..180)
+  h += `<div class="mat" style="left:30px;top:30px;width:150px;height:130px;background:#5b8def;opacity:.18;transform:translateZ(1.4px)"></div>`;
+  h += deskHTML(40,40,120,'mon-'+botDomId(SUPERVISOR),true) + chairHTML(100,125);
+  h += box(168,4,54,18,0,84,'#6d4c33','repeating-linear-gradient(90deg,#c0392b 0 6px,#2980b9 6px 11px,#f1c40f 11px 15px,#8e44ad 15px 21px,#6d4c33 21px 24px)','#5a3e29');
+  h += plant(10,166);
+  h += wallE(230,0,120,58,'glass e') + wallE(230,180,20,58,'glass e') + wallS(0,200,230,58,'glass');
+  h += box(226,115,7,7,0,64,'#555','#666','#444') + box(226,178,7,7,0,64,'#555','#666','#444');
+  h += sign(40,150,74,'Supervisor');
+
+  // Break room (door gap in the north partition, x 270..330)
+  h += wallS(0,390,270,58,'glass') + wallS(330,390,10,58,'glass') + wallE(340,390,H-390,58,'glass e');
+  h += box(266,386,7,7,0,64,'#555','#666','#444') + box(330,386,7,7,0,64,'#555','#666','#444');
+  h += sign(95,430,80,'☕ Break room','#8a5a33');
+  h += box(10,396,46,44,0,95,'#eef1f4','linear-gradient(90deg,#d5dbe1,#c7ced6)','#dfe4e9', '', 'fridge');               // fridge
+  h += box(60,396,150,36,0,34,'#efeeea','repeating-linear-gradient(90deg,#8a6a4a 0 36px,#6e533a 36px 38px)','#7a5c40'); // counter + cabinets
+  h += box(80,402,22,20,34,26,'#2b2b2b','#1c1c1c','#232323');                                                            // coffee machine
+  h += `<div class="counter-sink" style="left:136px;top:402px;width:34px;height:22px;transform:translateZ(34.5px)"></div>`;
+  h += box(224,398,22,22,0,40,'#eef2f6','#cfd8e2','#dbe3ec') + box(227,401,16,16,40,22,'rgba(90,170,235,.85)','rgba(70,150,220,.8)','rgba(80,160,230,.8)'); // water cooler
+  // card table + chairs
+  BREAK_SPOTS.slice(0,4).forEach(s=> h += box(s.p.x-13,s.p.y-13,26,26,0,13,'#c0392b','#962d22','#a9321f'));
+  h += box(TABLE.x-7,TABLE.y-7,14,14,0,30,'#5e3c20','#4a2f19','#55361d');
+  h += `<div class="ctable" style="left:${TABLE.x-TABLE.r}px;top:${TABLE.y-TABLE.r}px;width:${TABLE.r*2}px;height:${TABLE.r*2}px;transform:translateZ(30px)"><div class="cardlayer" id="cardLayer"></div></div>`;
+  // couch along the east partition
+  h += box(296,480,40,142,0,16,'#5b6b8a','#4a5874','#52617f') + box(324,480,12,142,16,28,'#52617f','#44516c','#4a5874');
+  h += box(296,480,28,10,16,12,'#52617f','#44516c','#4a5874') + box(296,612,28,10,16,12,'#52617f','#44516c','#4a5874');
+  h += plant(304,626);
+
+  // open-plan work area extras
+  h += box(962,6,42,38,0,34,'#e6e6e6','#bdbdbd','#cfcfcf',`<div style="position:absolute;left:8px;top:6px;width:24px;height:16px;background:#fff;border:1px solid #ccc"></div>`); // printer
+  h += sign(950,20,44,'🖨 Printer','#555');
+  h += plant(342,6) + plant(975,612) + plant(238,300);
+
+  // desks: one team-coloured mat per desk, label over the first desk of each team
+  const labelled = new Set();
+  Object.entries(deskSlots).forEach(([name,s])=>{
+    h += `<div class="mat" style="left:${s.desk.x-12}px;top:${s.desk.y-8}px;width:134px;height:136px;background:${s.color};transform:translateZ(1.4px)"></div>`;
+    h += deskHTML(s.desk.x, s.desk.y, 110, 'mon-'+botDomId(name), false) + chairHTML(s.seat.x, s.seat.y);
+    if(!labelled.has(s.team)){ labelled.add(s.team); h += `<div class="team-label" style="left:${s.desk.x-6}px;top:${s.desk.y+6}px;color:${s.color};transform:translateZ(72px) rotateZ(36deg) rotateX(-58deg)">${esc(s.team)}</div>`; }
+  });
+  return h;
+}
+function sceneSig(){ const {teams, keys} = teamsMap(); return JSON.stringify(keys.map(k=>[k,teams[k]])); }
+function renderScene(){
+  const b = document.getElementById('building');
+  const hint = document.getElementById('emptyHint');
+  if(!st.roster.length){ hint.style.display='block'; } else hint.style.display='none';
+  if(!b.firstChild){
+    b.style.left = (-W/2)+'px'; b.style.top = (-H/2)+'px';
+    b.innerHTML = `<div class="office" style="width:${W}px;height:${H}px"><div class="scenery" id="scenery" style="width:${W}px;height:${H}px"></div><div class="actors" id="actors"></div></div>`;
+  }
+  const sig = sceneSig();
+  if(sig === lastSceneSig) return false;
+  lastSceneSig = sig;
+  layoutDesks();
+  document.getElementById('scenery').innerHTML = sceneHTML();
+  game.key = ''; // card layer was rebuilt
+  return true;
 }
 
-function botHTML(name, x, y, extraCls){
+/* ---------- actors: one persistent element per bot, moved along waypoint paths ---------- */
+function samePt(a,b){ return a && b && Math.abs(a.x-b.x)<0.01 && Math.abs(a.y-b.y)<0.01; }
+function figHTML(name){
   const look = st.looks[name]||{};
-  const s = st.status[name];
-  const status = s ? s.status : 'idle';
-  const step = s ? (s.step||'') : '';
-  const chat = st.chat[name]||'';
-  const cls = ['bot3d', extraCls||'', status==='working'?'working':''].filter(Boolean).join(' ');
-  return `<div class="${cls}" id="${botDomId(name)}" style="left:${x}px;top:${y}px" data-bot="${esc(name)}" data-status="${esc(status)}" data-step="${esc(step)}" data-chat="${esc(chat)}">`+
-    `<div class="fig"><div class="body-shape">${shapeSVG(look.shape, look.color, 78)}`+
+  return `<div class="fig"><div class="body-shape">${shapeSVG(look.shape, look.color, 78)}`+
     (look.accessory==='glasses'?`<div class="acc glasses"></div>`:'')+
     (look.accessory==='antenna'?`<div class="acc antenna"></div>`:'')+
-    `<div class="eyes"><i></i><i></i></div></div><div class="sdot ${esc(status)}"></div></div></div>`;
+    `<div class="eyes"><i></i><i></i></div></div><div class="sdot"></div></div>`;
+}
+function syncActors(){
+  const layer = document.getElementById('actors'); if(!layer) return;
+  const names = st.roster.slice();
+  for(const n of Object.keys(agents)){ if(!names.includes(n)){ agents[n].el.remove(); delete agents[n]; delete breakSeat[n]; } }
+  for(const n of names){
+    let a = agents[n];
+    if(!a){
+      const el = document.createElement('div');
+      el.className = 'bot3d'; el.id = botDomId(n); el.setAttribute('data-bot', n);
+      layer.appendChild(el);
+      a = agents[n] = {name:n, el, x:0, y:0, key:null, entry:null, path:[], moving:false, pending:null, lookSig:'', cls:'', sdot:'', placed:false};
+    }
+    const ls = JSON.stringify(st.looks[n]||{});
+    if(ls !== a.lookSig){ a.lookSig = ls; a.el.innerHTML = figHTML(n); a.sdotEl = a.el.querySelector('.sdot'); a.figEl = a.el.querySelector('.body-shape'); a.sdot=''; }
+    if(!a.placed){
+      const loc = n===SUPERVISOR ? homeLoc() : desiredLoc(n);
+      if(loc){ placeAt(a, loc); }
+    }
+  }
+  actorsReady = true;
+}
+function placeAt(a, loc){
+  const p = loc.entry[loc.entry.length-1];
+  a.x = p.x; a.y = p.y; a.key = loc.key; a.entry = loc.entry; a.j = loc.entry.length-1;
+  a.path = []; a.moving = false; a.pending = null; a.placed = true;
+  a.el.style.left = a.x+'px'; a.el.style.top = a.y+'px';
+}
+/* Every spot is reached by an "entry" path that starts at the aisle hub. To walk somewhere, back out along the
+   current entry to the last waypoint it shares with the new one (hub or a room door), then follow the new entry in.
+   Waypoints remember which entry they belong to, so a bot can be re-routed at the next waypoint mid-walk. */
+function planFrom(entry, j, loc){
+  let k = 0; const lim = Math.min(j+1, loc.entry.length);
+  while(k < lim && samePt(entry[k], loc.entry[k])) k++;
+  if(k === 0) k = 1;
+  const pts = [];
+  for(let i=j-1; i>=k-1; i--) pts.push({x:entry[i].x, y:entry[i].y, entry, j:i});
+  for(let i=k; i<loc.entry.length; i++) pts.push({x:loc.entry[i].x, y:loc.entry[i].y, entry:loc.entry, j:i});
+  return pts;
+}
+function goTo(a, loc){
+  if(!loc) return;
+  if(!a.placed){ placeAt(a, loc); return; }
+  if(a.moving){
+    const dest = a.pending ? a.pending.key : a.key;
+    if(dest === loc.key) return;
+    a.pending = loc; a.path = a.path.slice(0,1);   // finish the current leg, then re-plan
+    return;
+  }
+  if(a.key === loc.key) return;
+  a.path = planFrom(a.entry, a.j, loc).filter((p,i)=> i>0 || !samePt(p, {x:a.x,y:a.y}));
+  a.key = loc.key;
+  a.moving = a.path.length > 0;
+  if(!a.moving){ a.entry = loc.entry; a.j = loc.entry.length-1; }
+}
+function stepAgent(a, dt){
+  if(!a.moving) return;
+  let step = WALK_SPEED * dt;
+  while(step > 0 && a.path.length){
+    const t = a.path[0]; const dx = t.x-a.x, dy = t.y-a.y; const d = Math.hypot(dx,dy);
+    if(d <= step){ a.x = t.x; a.y = t.y; a.entry = t.entry; a.j = t.j; a.path.shift(); step -= d; }
+    else { a.x += dx/d*step; a.y += dy/d*step; step = 0; }
+  }
+  if(!a.path.length){
+    a.moving = false;
+    if(a.pending){ const p = a.pending; a.pending = null; a.key = 'transit'; goTo(a, p); }
+  }
+  a.el.style.left = a.x.toFixed(1)+'px'; a.el.style.top = a.y.toFixed(1)+'px';
+}
+function updateActorLooks(){
+  for(const n in agents){
+    const a = agents[n];
+    const e = effStatus(n);
+    const atDesk = a.key === 'desk:'+n && !a.moving;
+    const sitHome = n===SUPERVISOR && a.key==='home' && !a.moving;
+    const typing = (atDesk && e.status==='working') || (sitHome && e.status==='working');
+    const cls = 'bot3d' + (a.moving?' walking':'') + (typing?' working':'') + (a.turnUntil && a.turnUntil>performance.now() ? ' turn':'');
+    if(cls !== a.cls){ a.cls = cls; a.el.className = cls; }
+    const sd = 'sdot ' + (e.status||'idle');
+    if(a.sdotEl && sd !== a.sdot){ a.sdot = sd; a.sdotEl.className = sd; }
+    const mon = document.getElementById('mon-'+botDomId(n));
+    if(mon){ const on = !!typing; if(mon.classList.contains('on') !== on) mon.classList.toggle('on', on); }
+  }
+}
+/* Re-path everyone toward where they belong (desk when working / waiting / error, break room otherwise). */
+function routeWorkers(){
+  for(const n of workers()){
+    const a = agents[n]; if(!a) continue;
+    if(heldNames.has(n) && !a.moving) continue;       // Tinker is on his way to talk to them
+    const loc = desiredLoc(n);
+    if(loc && !a.moving && a.key===loc.key && a.entry && !samePt(a.entry[a.entry.length-1], loc.entry[loc.entry.length-1])){ a.key = 'stale'; }
+    goTo(a, loc);
+  }
 }
 
-function applyCamera(animate){
-  const el = document.getElementById('camera');
-  if(!el) return;
-  if(animate===false) el.classList.add('dragging'); else el.classList.remove('dragging');
-  el.style.transform = 'translate(-50%,-50%) translate(' + cam.x + 'px, ' + cam.y + 'px) scale(' + cam.scale + ')';
-  const fitBtn = document.getElementById('zoomFit');
-  if(fitBtn) fitBtn.classList.toggle('on', cam.mode==='fit');
-  requestAnimationFrame(()=>requestAnimationFrame(placeBubbles));
+/* ---------- Tinker: visits, assignments, rounds ---------- */
+const tk = {task:null, roundIdx:0};
+function setCaption(name, text, kind){ if(text==null) delete captions[name]; else captions[name] = {text, kind}; }
+function releaseHold(name){
+  const c = (heldNames.get(name)||0) - 1;
+  if(c > 0) heldNames.set(name, c); else heldNames.delete(name);
 }
-function fitZoomScale(){ return isNarrow() ? 0.62 : 0.95; }
-function teamZoomScale(){ return isNarrow() ? 1.15 : 1.55; }
+function endTask(){
+  const t = tk.task; tk.task = null;
+  if(!t) return;
+  setCaption(SUPERVISOR, null);
+  if(t.type==='assign' || t.type==='visit'){ setCaption(t.target, null); releaseHold(t.target); }
+}
+function tinkerTick(now){
+  const T = agents[SUPERVISOR]; if(!T || !T.placed) return;
+  if(!tk.task){
+    if(taskQueue.length){
+      const t = taskQueue.shift();
+      if(!agents[t.target]){ releaseHold(t.target); return; }
+      tk.task = {...t, phase:'walk', tries:0}; return;
+    }
+    const act = activeWorkers().filter(n=>agents[n]);
+    if(act.length){
+      const name = act[tk.roundIdx % act.length]; tk.roundIdx++;
+      tk.task = {type:'check', target:name, phase:'walk', tries:0}; return;
+    }
+    goTo(T, homeLoc());
+    return;
+  }
+  const t = tk.task, A = agents[t.target];
+  if(!A){ endTask(); return; }
+  if(t.type==='check' && taskQueue.length){ endTask(); return; }   // a visit / new job beats routine rounds
+  if(t.phase==='walk'){
+    if(t.type==='check' && !isDeskStatus(effStatus(t.target).status)){ endTask(); return; }
+    const want = besideLocFor(t.target);
+    if(!want){ endTask(); return; }
+    const dest = T.pending ? T.pending.key : T.key;
+    if(dest !== want.key){ if(t.tries++ > 10){ endTask(); return; } goTo(T, want); return; }
+    if(T.moving || A.moving) return;           // arrive, and let the bot settle, before talking
+    t.phase = 'ask'; t.until = now + (t.type==='check' ? 2500 : 3000);
+    setCaption(SUPERVISOR, t.type==='assign' ? 'new job for you!' : t.type==='visit' ? 'you ok?' : '👀 checking…', t.type==='check' ? 'check' : 'ask');
+    return;
+  }
+  if(t.phase==='ask'){
+    if(now < t.until) return;
+    if(t.type==='check'){ endTask(); return; }
+    t.phase = 'reply'; t.until = now + (t.type==='assign' ? 2000 : 3000);
+    setCaption(t.target, t.type==='assign' ? 'on it!' : truncateStep(effStatus(t.target).step), 'reply');
+    return;
+  }
+  if(t.phase==='reply'){
+    if(now < t.until) return;
+    endTask();   // releases the hold; an assigned bot now walks to its desk and starts typing
+  }
+}
+
+/* Feed hooks: Tinker lines may carry visit:"Name"|"all" and assign:"Name"|[names]|"all". Each message animates once, ever. */
+function feedTargets(v){
+  const list = Array.isArray(v) ? v : [v];
+  const out = [];
+  for(const x of list){
+    if(String(x).toLowerCase()==='all'){ workers().forEach(w=>{ if(!out.includes(w)) out.push(w); }); }
+    else { const n = resolveWorkerName(x); if(n && !out.includes(n)) out.push(n); }
+  }
+  return out;
+}
+function considerTinkerActions(d, msgId, time){
+  if(!d || d.bot !== SUPERVISOR) return;
+  const ts = Number(time) || Math.floor(Date.now()/1000);
+  const msgMs = ts * 1000;
+  const fresh = !(msgMs && msgMs < pageLoadAt - 2*60*1000);
+  if(d.visit!=null && d.visit!==''){
+    const id = msgId || ('t' + String(time||'') + ':' + String(d.visit));
+    const targets = feedTargets(d.visit);
+    targets.forEach(n=> st.activity.unshift({bot:SUPERVISOR, kind:'visit', target:n, time:ts}));
+    if(targets.length && !seenVisitIds.has(id)){
+      seenVisitIds.add(id); saveSeenVisits();
+      if(fresh) targets.forEach(n=>{ taskQueue.push({type:'visit', target:n}); heldNames.set(n,(heldNames.get(n)||0)+1); });
+    }
+  }
+  if(d.assign!=null && d.assign!==''){
+    const id = (msgId ? msgId + ':assign' : ('a' + String(time||'') + ':' + JSON.stringify(d.assign)));
+    const targets = feedTargets(d.assign);
+    targets.forEach(n=>{
+      st.activity.unshift({bot:SUPERVISOR, kind:'assign', target:n, time:ts});
+      const prev = st.assignAt[n];
+      if(!prev || prev.time <= ts) st.assignAt[n] = {time:ts, task:d.task || d.job || ''};
+    });
+    if(targets.length && !seenVisitIds.has(id)){
+      seenVisitIds.add(id); saveSeenVisits();
+      if(fresh) targets.forEach(n=>{ taskQueue.push({type:'assign', target:n}); heldNames.set(n,(heldNames.get(n)||0)+1); });
+    }
+  }
+  if(st.activity.length>40) st.activity.length=40;
+}
+
+/* ---------- card table: solitaire alone, a shared hand for two or more ---------- */
+const game = {key:'', next:0, turn:0, players:[], pile:[]};
+const SUITS = ['r','b'];
+function tableSeated(){
+  const out = [];
+  for(const n in agents){ const a = agents[n]; if(n===SUPERVISOR || a.moving || !a.key || a.key.indexOf('break:')!==0) continue;
+    const i = Number(a.key.slice(6)); if(BREAK_SPOTS[i] && BREAK_SPOTS[i].table) out.push({name:n, i}); }
+  return out.sort((x,y)=>x.i-y.i);
+}
+function cardEl(x,y,cls,rot){ const c = document.createElement('div'); c.className = 'card '+cls; c.style.left = x+'px'; c.style.top = y+'px'; if(rot) c.style.transform = `translateZ(1px) rotate(${rot}deg)`; return c; }
+function updateCards(now){
+  const layer = document.getElementById('cardLayer'); if(!layer) return;
+  const seated = tableSeated();
+  const key = seated.length===0 ? 'none' : seated.length===1 ? 'solo:'+seated[0].i : 'group:'+seated.map(s=>s.i).join(',');
+  const C = TABLE.r;
+  if(key !== game.key){
+    game.key = key; game.players = seated; game.turn = 0; game.pile = []; game.next = now + 1200;
+    layer.innerHTML = '';
+    if(seated.length===1){
+      const d = BREAK_SPOTS[seated[0].i].dir;
+      const px = -d.y, py = d.x;  // perpendicular to the player's direction
+      for(let col=0; col<5; col++){
+        const off = (col-2)*15;
+        for(let k=0;k<=col%3;k++){
+          const cx = C + px*off - d.x*(10 - k*4), cy = C + py*off - d.y*(10 - k*4);
+          layer.appendChild(cardEl(cx, cy, k===col%3 ? SUITS[(col+k)%2] : 'back'));
+        }
+      }
+      layer.appendChild(cardEl(C + d.x*24 - px*12, C + d.y*24 - py*12, 'back'));
+      const flipper = cardEl(C + d.x*24 + px*6, C + d.y*24 + py*6, 'r'); flipper.id = 'flipCard';
+      layer.appendChild(flipper);
+    } else if(seated.length>=2){
+      seated.forEach(s=>{
+        const d = BREAK_SPOTS[s.i].dir, px = -d.y, py = d.x;
+        for(let k=-1;k<=1;k++) layer.appendChild(cardEl(C + d.x*30 + px*k*7, C + d.y*30 + py*k*7, 'back', k*12));
+      });
+    }
+    return;
+  }
+  if(now < game.next || !seated.length) return;
+  if(seated.length===1){
+    const f = document.getElementById('flipCard');
+    if(f){ f.classList.remove('flip'); void f.offsetWidth; f.classList.add('flip'); f.className = f.className.replace(/\b(r|b)\b/, Math.random()<.5?'r':'b'); }
+    game.next = now + 2200;
+    return;
+  }
+  // group: the player whose turn it is tosses a card onto the pile
+  const pl = seated[game.turn % seated.length];
+  const d = BREAK_SPOTS[pl.i].dir;
+  const c = cardEl(C + d.x*30, C + d.y*30, SUITS[Math.floor(Math.random()*2)]);
+  layer.appendChild(c);
+  const rot = Math.round(Math.random()*60-30);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{ c.style.left = (C + (Math.random()*8-4))+'px'; c.style.top = (C + (Math.random()*8-4))+'px'; c.style.transform = `translateZ(${2+game.pile.length*0.3}px) rotate(${rot}deg)`; }));
+  game.pile.push(c);
+  if(game.pile.length > 6){ const old = game.pile.shift(); old.remove(); }
+  const ag = agents[pl.name]; if(ag) ag.turnUntil = performance.now() + 500;
+  game.turn++;
+  game.next = now + 1600;
+}
+
+/* ---------- captions: created once per message, updated only when the text changes, stacked so none hides another ---------- */
+const bubbles = {};
+function bubbleSpec(name){
+  const cap = captions[name];
+  if(cap) return {key:cap.kind+'|'+cap.text, cls:cap.kind, html:esc(cap.text), prio: cap.kind==='reply' ? 5 : cap.kind==='ask' ? 4 : 2};
+  if(name===SUPERVISOR) return null;
+  const e = effStatus(name), a = agents[name];
+  if(e.status==='waiting_user'){
+    const chat = st.chat[name]||'';
+    return {key:'need|'+chat, cls:'need', html:`<div class="who">${esc(name)} needs you</div>`+(chat?`<a class="btn sm" href="${esc(chat)}">Open chat</a>`:''), prio:3};
+  }
+  if(e.status==='error' && e.step) return {key:'err|'+e.step, cls:'err', html:esc(e.step), prio:3};
+  if(e.status==='working' && e.step && a && !a.moving && a.key==='desk:'+name) return {key:'step|'+e.step, cls:'', html:esc(e.step), prio:1};
+  return null;
+}
+function dropBubble(n){ const b = bubbles[n]; if(!b) return; b.wrap.remove(); b.leader.remove(); delete bubbles[n]; }
+function placeBubbles(){
+  const layer = document.getElementById('bubbleLayer'), stage = document.getElementById('stage');
+  if(!layer || !stage) return;
+  const sr = stage.getBoundingClientRect();
+  const items = [];
+  for(const n of Object.keys(bubbles)) if(!agents[n]) dropBubble(n);
+  for(const n in agents){
+    const spec = bubbleSpec(n);
+    if(!spec){ dropBubble(n); continue; }
+    let b = bubbles[n];
+    if(!b){
+      const wrap = document.createElement('div'); wrap.className = 'bub';
+      const inner = document.createElement('div'); inner.className = 'hud-bubble';
+      const leader = document.createElement('div'); leader.className = 'leader'; leader.style.display = 'none';
+      wrap.setAttribute('data-bot', n); wrap.appendChild(inner);
+      layer.appendChild(leader); layer.appendChild(wrap);
+      b = bubbles[n] = {wrap, inner, leader, key:null, w:0, h:0, off:null, lifted:false, z:-1};
+    }
+    if(b.key !== spec.key){
+      b.key = spec.key;
+      b.inner.className = 'hud-bubble' + (spec.cls ? ' '+spec.cls : '');
+      b.inner.innerHTML = spec.html;
+      b.w = b.inner.offsetWidth; b.h = b.inner.offsetHeight;
+    }
+    const fe = agents[n].figEl; if(!fe) continue;
+    const r = fe.getBoundingClientRect();
+    if(r.width < 1) continue;
+    items.push({n, b, prio:spec.prio, ax:r.left + r.width/2 - sr.left, ay:r.top - sr.top - 4});
+  }
+  // higher priority keeps its natural spot; others move up until clear
+  items.sort((p,q)=> q.prio - p.prio || q.ay - p.ay);
+  const placed = [];
+  for(const it of items){
+    const b = it.b, w = b.w, h = b.h;
+    const x = Math.max(w/2 + 4, Math.min(sr.width - w/2 - 4, it.ax));
+    let bottom = it.ay;
+    for(let g=0; g<24; g++){
+      const hit = placed.find(p=> x - w/2 < p.r + 4 && x + w/2 > p.l - 4 && bottom - h < p.b + 4 && bottom > p.t - 4);
+      if(!hit) break;
+      bottom = hit.t - 6;
+    }
+    // ease back down when room frees up, but jump up at once (and never ease into another caption)
+    const off = bottom - it.ay;
+    let next = off;
+    if(b.off!=null && b.off < off - 0.5){
+      const cand = b.off + (off - b.off)*0.35, cb = it.ay + cand;
+      if(!placed.some(p=> x - w/2 < p.r + 4 && x + w/2 > p.l - 4 && cb - h < p.b + 4 && cb > p.t - 4)) next = cand;
+    }
+    b.off = next;
+    const by = it.ay + b.off;
+    placed.push({l:x - w/2, r:x + w/2, t:by - h, b:by});
+    b.wrap.style.transform = `translate3d(${x.toFixed(1)}px,${by.toFixed(1)}px,0)`;
+    const z = String(10 + it.prio*10);
+    if(b.z !== z){ b.z = z; b.wrap.style.zIndex = z; b.leader.style.zIndex = String(9 + it.prio*10); }
+    const lifted = (it.ay - by) > 8 || Math.abs(x - it.ax) > 14;
+    if(lifted !== b.lifted){ b.lifted = lifted; b.wrap.classList.toggle('lifted', lifted); b.leader.style.display = lifted ? 'block' : 'none'; }
+    if(lifted){
+      const dx = x - it.ax, dy = by - it.ay, len = Math.hypot(dx, dy);
+      b.leader.style.width = len.toFixed(1)+'px';
+      b.leader.style.transform = `translate3d(${it.ax.toFixed(1)}px,${(it.ay-1).toFixed(1)}px,0) rotate(${Math.atan2(dy,dx)}rad)`;
+    }
+  }
+}
+
+/* ---------- camera: Fit computes the projected office box; − / + / pinch / pan as before ---------- */
+const WORLD_M = new DOMMatrix('rotateX(58deg) rotateZ(-36deg)');
+function proj(x,y,z){ return WORLD_M.transformPoint(new DOMPoint(x - W/2, y - H/2, z||0)); }
+function sceneBox(){
+  const pts = [[0,0,0],[W,0,0],[0,H,0],[W,H,0],[0,0,WALL_H],[W,0,WALL_H],[W,H,WALL_H]].map(p=>proj(p[0],p[1],p[2]));
+  const xs = pts.map(p=>p.x), ys = pts.map(p=>p.y);
+  return {minx:Math.min(...xs), maxx:Math.max(...xs), miny:Math.min(...ys), maxy:Math.max(...ys)};
+}
+function availRect(){
+  const s = document.getElementById('stage').getBoundingClientRect();
+  if(isNarrow()) return {l:6, t:30, r:s.width-6, b:s.height-6, sw:s.width, sh:s.height};
+  let l = 334, r = s.width - 334;
+  if(r - l < 320){ l = 12; r = s.width - 12; }
+  return {l, t:90, r, b:s.height-20, sw:s.width, sh:s.height};
+}
+function applyCamera(animate){
+  const el = document.getElementById('camera'); if(!el) return;
+  if(animate===false) el.classList.add('dragging'); else el.classList.remove('dragging');
+  el.style.transform = `translate(${cam.x}px, ${cam.y}px) scale(${cam.scale})`;
+  const fitBtn = document.getElementById('zoomFit'); if(fitBtn) fitBtn.classList.toggle('on', cam.mode==='fit');
+}
+let fitScaleCache = 0.5;
 function fitCamera(){
   cam.mode = 'fit';
-  cam.scale = fitZoomScale();
-  cam.x = isNarrow() ? 10 : 24;
-  cam.y = isNarrow() ? 20 : 30;
+  const bb = sceneBox(), a = availRect();
+  const s = Math.max(0.12, Math.min((a.r-a.l)/(bb.maxx-bb.minx), (a.b-a.t)/(bb.maxy-bb.miny)));
+  fitScaleCache = s; cam.scale = s;
+  cam.x = (a.l+a.r)/2 - a.sw/2 - s*(bb.minx+bb.maxx)/2;
+  cam.y = (a.t+a.b)/2 - a.sh/2 - s*(bb.miny+bb.maxy)/2;
+  applyCamera(true);
+}
+function centerOn(wx, wy, s){
+  const a = availRect(), p = proj(wx, wy, 40);
+  cam.scale = s;
+  cam.x = (a.l+a.r)/2 - a.sw/2 - s*p.x;
+  cam.y = (a.t+a.b)/2 - a.sh/2 - s*p.y;
   applyCamera(true);
 }
 function zoomToTeam(team){
   cam.mode = 'floor';
-  cam.scale = teamZoomScale();
-  // Center roughly on team cluster
-  const members = (teamsMap().teams[team]||[]).filter(b=>b!==SUPERVISOR);
-  if(members.length){
-    const xs = members.map(b=>deskPos[b]?.x||0);
-    const ys = members.map(b=>deskPos[b]?.y||0);
-    const cx = xs.reduce((a,b)=>a+b,0)/xs.length;
-    const cy = ys.reduce((a,b)=>a+b,0)/ys.length;
-    cam.x = 40 - (cx - OFFICE.w/2) * 0.15;
-    cam.y = 20 - (cy - OFFICE.h/2) * 0.2;
-  } else {
-    cam.x = 16; cam.y = 20;
-  }
-  applyCamera(true);
+  const members = Object.entries(deskSlots).filter(([n,s])=>s.team===team).map(([n,s])=>s.seat);
+  const s = Math.min(1.6, fitScaleCache*2.2);
+  if(team===(st.groups[SUPERVISOR]||'') && !members.length){ centerOn(115,100,s); return; }
+  if(!members.length){ fitCamera(); return; }
+  centerOn(members.reduce((t,p)=>t+p.x,0)/members.length, members.reduce((t,p)=>t+p.y,0)/members.length - 40, s);
 }
-function nudgeZoom(factor){
+function zoomBy(factor, animate){
   cam.mode = 'floor';
-  cam.scale = Math.max(0.35, Math.min(3.2, cam.scale * factor));
-  applyCamera(true);
+  const a = availRect(); const ccx = (a.l+a.r)/2 - a.sw/2, ccy = (a.t+a.b)/2 - a.sh/2;
+  const ns = Math.max(0.12, Math.min(3.2, cam.scale * factor)); const f = ns / cam.scale;
+  cam.x = ccx - (ccx - cam.x)*f; cam.y = ccy - (ccy - cam.y)*f; cam.scale = ns;
+  applyCamera(animate);
 }
+function nudgeZoom(factor){ zoomBy(factor, true); }
 
-function placeBubbles(){
-  const layer = document.getElementById('bubbleLayer');
-  const stage = document.getElementById('stage');
-  if(!layer || !stage) return;
-  const sr = stage.getBoundingClientRect();
-  let out = '';
-  document.querySelectorAll('.bot3d').forEach(el=>{
-    const status = el.getAttribute('data-status')||'';
-    const step = el.getAttribute('data-step')||'';
-    const chat = el.getAttribute('data-chat')||'';
-    const name = el.getAttribute('data-bot')||'';
-    const checking = el.classList.contains('checking');
-    const visitAsk = el.classList.contains('visit-ask');
-    const visitReply = el.classList.contains('visit-reply');
-    const visitReplyText = el.getAttribute('data-visit-reply')||'';
-    let body = '';
-    if(visitAsk){
-      body = `<div class="hud-bubble visit-ask">you ok?</div>`;
-    } else if(visitReply){
-      body = `<div class="hud-bubble visit-reply">${esc(visitReplyText)}</div>`;
-    } else if(checking){
-      body = `<div class="hud-bubble check">👀 checking…</div>`;
-    } else if(status==='waiting_user'){
-      body = `<div class="hud-bubble need"><div class="who">${esc(name)} needs you</div>`+
-        (chat?`<a class="btn sm" href="${esc(chat)}">Open chat</a>`:'')+`</div>`;
-    } else if(status==='working' && step){
-      body = `<div class="hud-bubble">${esc(step)}</div>`;
-    } else if(status==='error' && step){
-      body = `<div class="hud-bubble" style="color:#E5484D">${esc(step)}</div>`;
-    } else return;
-    const r = el.getBoundingClientRect();
-    if(r.width<2 || r.height<2) return;
-    const x = r.left + r.width/2 - sr.left;
-    const y = r.top - sr.top - 8;
-    const cx = Math.max(70, Math.min(sr.width-70, x));
-    const cy = Math.max(24, y);
-    out += `<div style="position:absolute;left:${cx}px;top:${cy}px;pointer-events:none">${body}</div>`;
-  });
-  layer.innerHTML = out;
-}
-
-function buildSig(){
-  return JSON.stringify({
-    roster:st.roster, groups:st.groups, looks:st.looks,
-    status:Object.fromEntries(Object.entries(st.status).map(([k,v])=>[k,v.status+'|'+v.step]))
-  });
-}
-
-function renderBuilding(force){
-  const sig = buildSig();
-  const b = document.getElementById('building');
-  const hint = document.getElementById('emptyHint');
-  if(!st.roster.length){ b.innerHTML=''; hint.style.display='block'; lastBuildSig=''; return; }
-  hint.style.display='none';
-
-  // Only rebuild DOM when roster/looks/desks change meaningfully; status-only updates patch in place when possible
-  const needRebuild = force || sig !== lastBuildSig;
-  // Always rebuild for simplicity + correctness with looks/desks (lean enough for few bots)
-  lastBuildSig = sig;
-  const pos = layoutDesks();
-  const {teams, keys} = teamsMap();
-
-  let html = `<div class="office">`;
-  html += `<div class="slab"></div><div class="wall-back"></div><div class="wall-left"></div>`;
-
-  // Glass office
-  html += `<div class="glass-office"><div class="gfloor"></div><div class="gback"></div><div class="gleft"></div><div class="gright"></div><div class="gtag">Supervisor</div></div>`;
-
-  // Team rugs + labels
-  keys.forEach((g, ti)=>{
-    const members = (teams[g]||[]).filter(b=>b!==SUPERVISOR);
-    if(!members.length) return;
-    const xs = members.map(n=>pos[n].x);
-    const ys = members.map(n=>pos[n].y);
-    const minx = Math.min(...xs)-20, miny = Math.min(...ys)-16;
-    const maxx = Math.max(...xs)+130, maxy = Math.max(...ys)+120;
-    const color = FLOOR_COLORS[ti % FLOOR_COLORS.length];
-    html += `<div class="team-rug" data-team="${esc(g)}" style="left:${minx}px;top:${miny}px;width:${maxx-minx}px;height:${maxy-miny}px;background:${color}33;border-color:${color}66"></div>`;
-    html += `<div class="team-label" style="left:${minx+8}px;top:${miny+4}px;color:${color}">${esc(g)}</div>`;
-  });
-
-  // Desks for everyone
-  st.roster.forEach(name=>{
-    const p = pos[name]; if(!p) return;
-    html += deskHTML(p.x, p.y);
-  });
-
-  // Worker bots at desks
-  workers().forEach(name=>{
-    const p = pos[name]; if(!p) return;
-    html += botHTML(name, p.seat.x, p.seat.y, '');
-  });
-
-  // Tinker — start at desk (walk loop will move)
-  const tp = pos[SUPERVISOR] || TINKER_DESK;
-  const tExtra = (st.status[SUPERVISOR]||{}).status==='working' ? 'typing' : '';
-  html += botHTML(SUPERVISOR, tp.seat.x, tp.seat.y, tExtra);
-  html += `</div>`;
-  b.innerHTML = html;
-
-  // Restore Tinker mid-walk / mid-visit position after DOM rebuild
-  if(tinkerState.mode !== 'sit'){
-    const tel = document.getElementById('bot-Tinker');
-    if(tel){
-      tel.style.transition = 'none';
-      tel.style.left = tinkerPos.x + 'px';
-      tel.style.top = tinkerPos.y + 'px';
-      tel.classList.toggle('walking', tinkerState.mode==='walk' || tinkerState.mode==='return' || tinkerState.mode==='visit_walk');
-      tel.classList.toggle('checking', tinkerState.mode==='check');
-      tel.classList.toggle('visit-ask', tinkerState.mode==='visit_ask');
-      tel.classList.remove('typing');
-      requestAnimationFrame(()=>{ tel.style.transition = ''; });
-    }
-    if(tinkerState.mode==='visit_reply' && tinkerState.target){
-      const wel = document.getElementById(botDomId(tinkerState.target));
-      if(wel){
-        wel.classList.add('visit-reply');
-        wel.setAttribute('data-visit-reply', truncateStep((st.status[tinkerState.target]||{}).step||''));
-      }
-    }
-  }
-
-  if(cam.mode==='fit') fitCamera();
-  else if(selectedTeam) zoomToTeam(selectedTeam);
-  else fitCamera();
-
-  ensureTinkerLoop();
-  if(visitQueue.length && !isVisitMode(tinkerState.mode)){
-    const next = visitQueue.shift();
-    const fromDesk = (tinkerState.mode==='sit' || tinkerState.mode==='return');
-    startVisitWalk(next, fromDesk);
-  }
-  // Demo/walk: jump mid-check for screenshot
-  if((DEMO || FORCE_WALK) && activeWorkers().length && !isVisitMode(tinkerState.mode) && !visitQueue.length){
-    const aw = activeWorkers()[0];
-    const p = deskPos[aw];
-    const tel = document.getElementById('bot-Tinker');
-    if(tel && p){
-      tel.style.transition = 'none';
-      tel.style.left = (p.x + 95) + 'px';
-      tel.style.top = (p.y + 10) + 'px';
-      tel.classList.add('walking','checking');
-      tel.classList.remove('typing','working');
-      tinkerPos = {x:p.x+95, y:p.y+10};
-      tinkerState = {mode:'check', target:aw, checkUntil:Date.now()+3000, route:activeWorkers().slice(), routeIdx:0};
-      requestAnimationFrame(()=>requestAnimationFrame(placeBubbles));
-    }
-  }
-}
-
-function moveTinkerTo(x, y, walking){
-  const el = document.getElementById('bot-Tinker');
-  if(!el) return;
-  tinkerPos = {x, y};
-  el.classList.toggle('walking', !!walking);
-  el.classList.toggle('checking', tinkerState.mode==='check');
-  el.classList.toggle('visit-ask', tinkerState.mode==='visit_ask');
-  el.classList.toggle('typing', !walking && (st.status[SUPERVISOR]||{}).status==='working' && tinkerState.mode==='sit');
-  el.style.left = x + 'px';
-  el.style.top = y + 'px';
-}
-
-function clearVisitClasses(){
-  document.querySelectorAll('.visit-ask,.visit-reply').forEach(el=>{
-    el.classList.remove('visit-ask','visit-reply');
-    el.removeAttribute('data-visit-reply');
-  });
-}
-
-function truncateStep(step){
-  const s = String(step||'').trim();
-  if(!s) return 'all good 👍';
-  return s.length > 40 ? s.slice(0, 37) + '...' : s;
-}
-
-function beginVisitAsk(name){
-  tinkerState.mode = 'visit_ask';
-  tinkerState.target = name;
-  tinkerState.checkUntil = Date.now() + 4000;
-  const el = document.getElementById('bot-Tinker');
-  if(el){
-    el.classList.add('visit-ask');
-    el.classList.remove('walking','checking','typing','working');
-  }
-  placeBubbles();
-}
-
-function beginVisitReply(name){
-  tinkerState.mode = 'visit_reply';
-  tinkerState.target = name;
-  tinkerState.checkUntil = Date.now() + 4000;
-  const tel = document.getElementById('bot-Tinker');
-  if(tel) tel.classList.remove('visit-ask','walking','checking');
-  const wel = document.getElementById(botDomId(name));
-  if(wel){
-    wel.classList.add('visit-reply');
-    wel.setAttribute('data-visit-reply', truncateStep((st.status[name]||{}).step||''));
-  }
-  placeBubbles();
-}
-
-function finishVisitAndContinue(){
-  clearVisitClasses();
-  const el = document.getElementById('bot-Tinker');
-  if(visitQueue.length){
-    const next = visitQueue.shift();
-    startVisitWalk(next, false);
-    return;
-  }
-  const active = activeWorkers();
-  if(active.length){
-    // Resume rounds from current position
-    tinkerState.route = active.slice();
-    tinkerState.routeIdx = 0;
-    tinkerState.mode = 'walk';
-    tinkerState.target = active[0];
-    goCheckCurrent();
-    return;
-  }
-  tinkerState.mode = 'return';
-  tinkerState.target = null;
-  moveTinkerTo(TINKER_DOOR.x, TINKER_DOOR.y, true);
-  setTimeout(()=>{
-    if(tinkerState.mode!=='return') return;
-    moveTinkerTo(TINKER_DESK.x+18, TINKER_DESK.y+8, true);
-    setTimeout(()=>{
-      if(tinkerState.mode!=='return') return;
-      tinkerState.mode='sit';
-      moveTinkerTo(TINKER_DESK.x+18, TINKER_DESK.y+8, false);
-      if(el){ el.classList.remove('checking','walking','visit-ask'); }
-      placeBubbles();
-    }, 1100);
-  }, 1100);
-}
-
-function startVisitWalk(name, fromDesk){
-  const p = deskPos[name];
-  if(!p){
-    // bot not on floor — skip
-    if(visitQueue.length) startVisitWalk(visitQueue.shift(), fromDesk);
-    else if(!isVisitMode(tinkerState.mode)) { /* nothing */ }
-    else finishVisitAndContinue();
-    return;
-  }
-  tinkerState.mode = 'visit_walk';
-  tinkerState.target = name;
-  tinkerState.checkUntil = 0;
-  clearVisitClasses();
-  const goBeside = ()=>{
-    if(tinkerState.mode!=='visit_walk' || tinkerState.target!==name) return;
-    moveTinkerTo(p.x + 95, p.y + 10, true);
-    setTimeout(()=>{
-      if(tinkerState.mode!=='visit_walk' || tinkerState.target!==name) return;
-      beginVisitAsk(name);
-    }, 1200);
-  };
-  if(fromDesk){
-    moveTinkerTo(TINKER_DOOR.x, TINKER_DOOR.y, true);
-    setTimeout(()=>{
-      if(tinkerState.mode!=='visit_walk' || tinkerState.target!==name) return;
-      goBeside();
-    }, 1000);
-  } else {
-    goBeside();
-  }
-}
-
-function considerVisit(d, msgId, time){
-  if(!d || d.bot !== SUPERVISOR) return;
-  if(d.visit==null || d.visit==='') return;
-  const msgMs = (Number(time)||0) * 1000;
-  // Only react to visits newer than page load minus 10 minutes
-  const id = msgId || ('t' + String(time||'') + ':' + String(d.visit));
-  if(seenVisitLog.has(id)) return; // already logged this message
-  seenVisitLog.add(id);
-  const targets = [];
-  if(String(d.visit).toLowerCase() === 'all'){
-    workers().forEach(w => targets.push(w));
-  } else {
-    const name = resolveWorkerName(d.visit);
-    if(name) targets.push(name);
-  }
-  if(!targets.length) return; // named bot not on the floor
-  const ts = Number(time) || Math.floor(Date.now()/1000);
-  for(const name of targets){
-    st.activity.unshift({bot:SUPERVISOR, status:'checked', step:'checked on '+name, kind:'visit', visitTarget:name, time:ts});
-  }
-  if(st.activity.length>40) st.activity.length=40;
-  if(seenVisitIds.has(id)) return; // already animated this message (persists across reloads)
-  seenVisitIds.add(id); saveSeenVisits();
-  if(msgMs && msgMs < pageLoadAt - 2*60*1000) return; // old check-in: log it, don't replay it
-  for(const name of targets) visitQueue.push(name);
-  // tickTinker / post-render kick will start the walk once desks exist
-}
-
-function ensureTinkerLoop(){
-  if(walkTimer) return;
-  walkTimer = setInterval(tickTinker, 400);
-}
-
-function tickTinker(){
-  const el = document.getElementById('bot-Tinker');
-  if(!el) return;
-  const active = activeWorkers();
-  const now = Date.now();
-
-  // Visits take priority over rounds while in progress
-  if(tinkerState.mode==='visit_ask'){
-    if(now < tinkerState.checkUntil){ placeBubbles(); return; }
-    beginVisitReply(tinkerState.target);
-    return;
-  }
-  if(tinkerState.mode==='visit_reply'){
-    if(now < tinkerState.checkUntil){ placeBubbles(); return; }
-    finishVisitAndContinue();
-    return;
-  }
-  if(tinkerState.mode==='visit_walk'){
-    // waiting on walk timeouts
-    return;
-  }
-  if(visitQueue.length){
-    const next = visitQueue.shift();
-    const fromDesk = (tinkerState.mode==='sit' || tinkerState.mode==='return');
-    startVisitWalk(next, fromDesk);
-    return;
-  }
-
-  // Screenshot lock: keep mid-walk pose while ?walk or first demo seconds — actually continuous OK
-
-  if(tinkerState.mode==='check'){
-    if(now < tinkerState.checkUntil){
-      el.classList.add('checking');
-      placeBubbles();
-      return;
-    }
-    // next target
-    tinkerState.routeIdx++;
-    if(tinkerState.routeIdx >= tinkerState.route.length){
-      // rebuild route from current active
-      tinkerState.route = active.slice();
-      tinkerState.routeIdx = 0;
-    }
-    if(!tinkerState.route.length){
-      tinkerState.mode = 'return';
-      tinkerState.target = null;
-      moveTinkerTo(TINKER_DOOR.x, TINKER_DOOR.y, true);
-      setTimeout(()=>{
-        if(tinkerState.mode!=='return') return;
-        moveTinkerTo(TINKER_DESK.x+18, TINKER_DESK.y+8, true);
-        setTimeout(()=>{
-          tinkerState.mode='sit';
-          moveTinkerTo(TINKER_DESK.x+18, TINKER_DESK.y+8, false);
-          el.classList.remove('checking','walking');
-          placeBubbles();
-        }, 1000);
-      }, 1000);
-      return;
-    }
-    tinkerState.mode = 'walk';
-    tinkerState.target = tinkerState.route[tinkerState.routeIdx];
-  }
-
-  if(!active.length && tinkerState.mode!=='sit' && tinkerState.mode!=='return'){
-    tinkerState.mode = 'return';
-    tinkerState.target = null;
-    moveTinkerTo(TINKER_DOOR.x, TINKER_DOOR.y, true);
-    setTimeout(()=>{
-      moveTinkerTo(TINKER_DESK.x+18, TINKER_DESK.y+8, true);
-      setTimeout(()=>{
-        tinkerState.mode='sit';
-        moveTinkerTo(TINKER_DESK.x+18, TINKER_DESK.y+8, false);
-        el.classList.remove('checking','walking');
-        placeBubbles();
-      }, 1100);
-    }, 1100);
-    return;
-  }
-
-  if(active.length && (tinkerState.mode==='sit' || tinkerState.mode==='return')){
-    tinkerState.route = active.slice();
-    tinkerState.routeIdx = 0;
-    tinkerState.mode = 'walk';
-    tinkerState.target = tinkerState.route[0];
-    moveTinkerTo(TINKER_DOOR.x, TINKER_DOOR.y, true);
-    setTimeout(()=>{
-      if(tinkerState.mode!=='walk') return;
-      goCheckCurrent();
-    }, 1000);
-    return;
-  }
-
-  if(tinkerState.mode==='walk' && tinkerState.target){
-    // if already moving, wait for arrival via check kickoff
-    goCheckCurrent();
-  }
-
-  // Sitting: typing bob if Tinker working
-  if(tinkerState.mode==='sit'){
-    const ts = (st.status[SUPERVISOR]||{}).status;
-    el.classList.toggle('typing', ts==='working');
-    el.classList.toggle('working', ts==='working');
-  }
-}
-
-function goCheckCurrent(){
-  const name = tinkerState.target;
-  const p = deskPos[name];
-  if(!p){ tinkerState.mode='sit'; return; }
-  tinkerState.mode = 'walk';
-  moveTinkerTo(p.x + 95, p.y + 10, true);
-  setTimeout(()=>{
-    if(tinkerState.target!==name) return;
-    tinkerState.mode = 'check';
-    tinkerState.checkUntil = Date.now() + 3000;
-    const el = document.getElementById('bot-Tinker');
-    if(el){ el.classList.add('checking'); el.classList.remove('walking'); }
-    placeBubbles();
-  }, 1200);
-}
-
+/* ---------- side panels (unchanged layout; statuses include Tinker's assignments) ---------- */
 function renderPanels(){
   const {teams, keys} = teamsMap();
   const c = counts();
@@ -999,11 +1001,10 @@ function renderPanels(){
   document.getElementById('c-wait').textContent = `${c.wait} waiting`;
   document.getElementById('c-err').textContent = `${c.err} errors`;
   document.getElementById('c-rest').textContent = `${c.rest} resting`;
-
   let fh='';
   keys.forEach((g,i)=>{
     const bots = teams[g]||[];
-    const working = bots.filter(b=>(st.status[b]||{}).status==='working').length;
+    const working = bots.filter(b=>effStatus(b).status==='working').length;
     const color = FLOOR_COLORS[i % FLOOR_COLORS.length];
     const active = g===selectedTeam ? ' active' : '';
     fh += `<div class="floor-row${active}" data-team="${esc(g)}">
@@ -1012,61 +1013,50 @@ function renderPanels(){
       <span class="badge">${working}/${bots.length}</span></div>`;
   });
   document.getElementById('floorList').innerHTML = fh || `<div style="padding:8px;color:#999;font-size:12px">No teams yet</div>`;
-
-  const waiting = st.roster.filter(b=>(st.status[b]||{}).status==='waiting_user');
+  const waiting = st.roster.filter(b=>effStatus(b).status==='waiting_user');
   document.getElementById('waitList').innerHTML = waiting.length ? waiting.map(b=>{
     const chat=st.chat[b]||''; const look=st.looks[b]||{};
     return `<div class="wait-row"><div class="icon2d">${shapeSVG(look.shape,look.color,24)}</div>
-      <div class="floor-meta"><div class="n">${esc(b)}</div><div class="m">${esc((st.status[b]||{}).step||'needs you')}</div></div>
+      <div class="floor-meta"><div class="n">${esc(b)}</div><div class="m">${esc(effStatus(b).step||'needs you')}</div></div>
       ${chat?`<a class="btn sm" href="${esc(chat)}">Open chat</a>`:''}</div>`;
   }).join('') : `<div style="padding:8px;color:#999;font-size:12px">Nobody waiting</div>`;
-
-  const finished = st.roster.filter(b=>{const s=(st.status[b]||{}).status; return s==='done'||s==='idle'});
+  const finished = st.roster.filter(b=>{const s=effStatus(b).status; return s==='done'||s==='idle'});
   document.getElementById('finList').innerHTML = finished.length ? finished.map(b=>{
-    const look=st.looks[b]||{}; const s=st.status[b]||{};
+    const look=st.looks[b]||{}; const s=effStatus(b);
     return `<div class="fin-row" data-chat="${esc(st.chat[b]||'')}"><div class="icon2d">${shapeSVG(look.shape,look.color,22)}</div>
       <div class="floor-meta"><div class="n">${esc(b)}</div><div class="m">${esc(statusLabel(s.status))} · ${esc(s.step||'')}</div></div></div>`;
   }).join('') : `<div style="padding:8px;color:#999;font-size:12px">None yet</div>`;
-
   let rh='';
   for(const [bot, items] of Object.entries(st.routines)){
-    (items||[]).forEach(it=>{
-      rh += `<div class="rt-row" style="cursor:default"><div class="floor-meta"><div class="n">${esc(it.name)}</div><div class="m">${esc(bot)} · ${esc(it.schedule||'')}</div></div></div>`;
-    });
+    (items||[]).forEach(it=>{ rh += `<div class="rt-row" style="cursor:default"><div class="floor-meta"><div class="n">${esc(it.name)}</div><div class="m">${esc(bot)} · ${esc(it.schedule||'')}</div></div></div>`; });
   }
   document.getElementById('rtList').innerHTML = rh || `<div style="padding:8px;color:#999;font-size:12px">No routines posted</div>`;
-
   document.getElementById('actList').innerHTML = st.activity.length ? st.activity.slice(0,20).map(a=>{
-    if(a.kind==='visit'){
-      return `<div class="act-row"><div class="t">${nyTime(a.time)}</div><div class="txt"><b>${esc(SUPERVISOR)}</b> checked on ${esc(a.visitTarget||'')}</div></div>`;
-    }
+    if(a.kind==='visit') return `<div class="act-row"><div class="t">${nyTime(a.time)}</div><div class="txt"><b>${esc(SUPERVISOR)}</b> checked on ${esc(a.target||'')}</div></div>`;
+    if(a.kind==='assign') return `<div class="act-row"><div class="t">${nyTime(a.time)}</div><div class="txt"><b>${esc(SUPERVISOR)}</b> assigned work to ${esc(a.target||'')}</div></div>`;
     return `<div class="act-row"><div class="t">${nyTime(a.time)}</div><div class="txt"><b>${esc(a.bot)}</b> ${esc(statusLabel(a.status).toLowerCase())}${a.step?` — ${esc(a.step)}`:''}</div></div>`;
   }).join('') : `<div style="padding:8px;color:#999;font-size:12px">No activity yet</div>`;
-
-  // Right panel: ALL bots
-  const workingN = st.roster.filter(b=>(st.status[b]||{}).status==='working').length;
+  const workingN = st.roster.filter(b=>effStatus(b).status==='working').length;
   document.getElementById('rbName').textContent = selectedTeam || 'All bots';
   document.getElementById('rbMeta').textContent = `${workingN} working · ${st.roster.length} bot${st.roster.length===1?'':'s'}`;
-  const showList = selectedTeam ? (teams[selectedTeam]||[]) : st.roster.slice();
-  // Keep supervisor first if present
+  const showList = selectedTeam ? (teams[selectedTeam]||[]).slice() : st.roster.slice();
   showList.sort((a,b)=> (a===SUPERVISOR?-1:0) - (b===SUPERVISOR?-1:0) || a.localeCompare(b));
   document.getElementById('botCards').innerHTML = showList.map(b=>{
-    const look=st.looks[b]||{}; const s=st.status[b]||{}; const chat=st.chat[b]||'';
+    const look=st.looks[b]||{}; const s=effStatus(b); const chat=st.chat[b]||'';
     const role = b===SUPERVISOR ? 'Supervisor · ' : '';
+    const where = b===SUPERVISOR ? '' : (isDeskStatus(s.status) ? '' : ' · ☕ break room');
     return `<div class="bot-card" data-chat="${esc(chat)}">
       <div class="icon2d">${shapeSVG(look.shape,look.color,26)}</div>
-      <div class="info"><div class="n">${esc(b)}</div><div class="m">${role}${esc(statusLabel(s.status)||'No status')} · ${esc(s.step||'—')}</div></div>
+      <div class="info"><div class="n">${esc(b)}</div><div class="m">${role}${esc(s.status?statusLabel(s.status):'No status')} · ${esc(s.step||'—')}${where}</div></div>
       <span class="status-dot ${esc(s.status||'idle')}"></span></div>`;
   }).join('');
-
   const u = st.usage;
   if(u){
     const pct = Number(u.total_used_pct)||0;
     document.getElementById('usagePct').textContent = `${pct}%`;
     document.getElementById('usageBar').style.width = Math.max(0,Math.min(100,pct))+'%';
     document.getElementById('usageReset').textContent = `Resets in ${resetsIn(u.resets_at)}`;
-    document.getElementById('usageLB').innerHTML = Object.entries(u.bots||{})
-      .sort((a,b)=>Number(b[1])-Number(a[1]))
+    document.getElementById('usageLB').innerHTML = Object.entries(u.bots||{}).sort((a,b)=>Number(b[1])-Number(a[1]))
       .map(([k,v])=>`<div class="row"><span>${esc(k)}</span><span>${esc(v)}%</span></div>`).join('');
   } else {
     document.getElementById('usagePct').textContent = '—';
@@ -1077,18 +1067,15 @@ function renderPanels(){
 }
 
 function render(){
-  renderBuilding();
+  const rebuilt = renderScene();
+  syncActors();
+  if(rebuilt){ if(cam.mode==='fit') fitCamera(); else if(selectedTeam) zoomToTeam(selectedTeam); }
   renderPanels();
 }
-
-function showMsg(title, body){
-  const el = document.getElementById('msg');
-  el.innerHTML = `<b>${esc(title)}</b>${esc(body)}`;
-  el.classList.add('show');
-}
+function showMsg(title, body){ const el = document.getElementById('msg'); el.innerHTML = `<b>${esc(title)}</b>${esc(body)}`; el.classList.add('show'); }
 function hideMsg(){ document.getElementById('msg').classList.remove('show'); }
 function resetState(){
-  for(const k of ['groups','chat','looks','status','routines']) st[k]={};
+  for(const k of ['groups','chat','looks','status','routines','assignAt']) st[k]={};
   st.roster=[]; st.usage=null; st.activity=[];
 }
 function ingestLines(lines){
@@ -1102,40 +1089,37 @@ function ingestLines(lines){
         const payload = JSON.parse(m.message);
         const t = m.time || Math.floor(Date.now()/1000);
         apply(payload, t);
-        considerVisit(payload, m.id, t);
+        considerTinkerActions(payload, m.id, t);
       }catch(e){}
     }
   }
 }
 
+const NOW_S = Math.floor(Date.now()/1000);
 const DEMO_FEED = [
-  {event:'message',time:Math.floor(Date.now()/1000)-600,message:JSON.stringify({groups:{Tinker:'Ops',Scout:'Testing','E3A Fixer':'Testing'}})},
-  {event:'message',time:Math.floor(Date.now()/1000)-599,message:JSON.stringify({chat:{Tinker:'grokbot://app/v1/agent?id=demo-tinker',Scout:'grokbot://app/v1/agent?id=demo-scout','E3A Fixer':'grokbot://app/v1/agent?id=demo-fixer'}})},
-  {event:'message',time:Math.floor(Date.now()/1000)-598,message:JSON.stringify({looks:{Tinker:{shape:'drop',color:'#E5484D',accessory:'glasses'},Scout:{shape:'star4',color:'#14C16F',accessory:'antenna'},'E3A Fixer':{shape:'hexagon',color:'#FD690F',accessory:'none'}}})},
-  {event:'message',time:Math.floor(Date.now()/1000)-597,message:JSON.stringify({roster:['Tinker','Scout','E3A Fixer']})},
-  {event:'message',time:Math.floor(Date.now()/1000)-596,message:JSON.stringify({routines:{bot:'Tinker',items:[{name:'HQ daily roster',schedule:'Daily around 8:00 AM'},{name:'HQ usage line',schedule:'Daily around 9 AM, 1 PM, 5 PM and 9 PM'}]}})},
-  {event:'message',time:Math.floor(Date.now()/1000)-595,message:JSON.stringify({type:'usage',total_used_pct:18.5,resets_at:new Date(Date.now()+3*86400000+5*3600000).toISOString(),bots:{'E3A Fixer':72,Tinker:20,Scout:8}})},
-  {event:'message',time:Math.floor(Date.now()/1000)-120,message:JSON.stringify({bot:'Scout',status:'working',step:'verifying a movement path'})},
-  {event:'message',time:Math.floor(Date.now()/1000)-90,message:JSON.stringify({bot:'E3A Fixer',status:'idle',step:'stood down'})},
-  {event:'message',time:Math.floor(Date.now()/1000)-30,message:JSON.stringify({bot:'Tinker',status:'waiting_user',step:'asking about a dashboard redesign'})},
+  {event:'message',time:NOW_S-600,message:JSON.stringify({groups:{Tinker:'Ops',Scout:'Testing','E3A Fixer':'Testing'}})},
+  {event:'message',time:NOW_S-599,message:JSON.stringify({chat:{Tinker:'grokbot://app/v1/agent?id=demo-tinker',Scout:'grokbot://app/v1/agent?id=demo-scout','E3A Fixer':'grokbot://app/v1/agent?id=demo-fixer'}})},
+  {event:'message',time:NOW_S-598,message:JSON.stringify({looks:{Tinker:{shape:'drop',color:'#E5484D',accessory:'glasses'},Scout:{shape:'star4',color:'#14C16F',accessory:'antenna'},'E3A Fixer':{shape:'hexagon',color:'#FD690F',accessory:'none'}}})},
+  {event:'message',time:NOW_S-597,message:JSON.stringify({roster:['Tinker','Scout','E3A Fixer']})},
+  {event:'message',time:NOW_S-595,message:JSON.stringify({type:'usage',total_used_pct:18.5,resets_at:new Date(Date.now()+3*86400000+5*3600000).toISOString(),bots:{'E3A Fixer':72,Tinker:20,Scout:8}})},
+  {event:'message',time:NOW_S-120,message:JSON.stringify({bot:'Scout',status:'idle',step:'waiting for a retest'})},
+  {event:'message',time:NOW_S-90,message:JSON.stringify({bot:'E3A Fixer',status:'idle',step:'stood down'})},
+  {event:'message',time:NOW_S-30,message:JSON.stringify({bot:'Tinker',status:'idle',step:'at desk'})},
 ];
 
 async function load(){
   document.getElementById('clock').textContent = nyClock();
   if(DEMO){
-    hideMsg();
-    ingestLines(DEMO_FEED.map(x=>JSON.stringify(x)));
+    hideMsg(); ingestLines(DEMO_FEED.map(x=>JSON.stringify(x)));
     document.getElementById('liveLabel').textContent = 'Demo';
     document.getElementById('liveDot').style.background = '#1E86FC';
-    render();
-    return;
+    render(); return;
   }
   if(!topic){
     showMsg('Add your channel to the address', 'Open this file with #<your channel> at the end of the address, like a password. Do not share that link.');
     document.getElementById('liveLabel').textContent = 'Offline';
     document.getElementById('liveDot').style.background = '#959595';
-    resetState(); render();
-    return;
+    resetState(); render(); return;
   }
   try{
     const r = await fetch(`https://ntfy.sh/${encodeURIComponent(topic)}/json?poll=1&since=12h`);
@@ -1158,21 +1142,13 @@ document.getElementById('left').addEventListener('click', (e)=>{
   const sec = e.target.closest('.sec');
   if(sec){ const body=sec.nextElementSibling; sec.classList.toggle('collapsed'); body.classList.toggle('collapsed'); return; }
   const fr = e.target.closest('.floor-row');
-  if(fr){
-    selectedTeam = fr.getAttribute('data-team');
-    cam.mode = 'floor';
-    renderPanels();
-    zoomToTeam(selectedTeam);
-    return;
-  }
+  if(fr){ selectedTeam = fr.getAttribute('data-team'); cam.mode = 'floor'; renderPanels(); zoomToTeam(selectedTeam); return; }
   const fin = e.target.closest('.fin-row');
   if(fin){ const chat=fin.getAttribute('data-chat'); if(chat) location.href=chat; }
 });
 document.getElementById('botCards').addEventListener('click', (e)=>{
-  const card = e.target.closest('.bot-card');
-  if(!card) return;
-  const chat = card.getAttribute('data-chat');
-  if(chat) location.href = chat;
+  const card = e.target.closest('.bot-card'); if(!card) return;
+  const chat = card.getAttribute('data-chat'); if(chat) location.href = chat;
 });
 
 // Zoom / pan / pinch / wheel
@@ -1181,14 +1157,12 @@ document.getElementById('botCards').addEventListener('click', (e)=>{
   document.getElementById('zoomIn').addEventListener('click', (e)=>{ e.stopPropagation(); nudgeZoom(1.2); });
   document.getElementById('zoomOut').addEventListener('click', (e)=>{ e.stopPropagation(); nudgeZoom(1/1.2); });
   document.getElementById('zoomFit').addEventListener('click', (e)=>{ e.stopPropagation(); selectedTeam=null; fitCamera(); renderPanels(); });
-
-  let pointers = new Map();
+  const pointers = new Map();
   let pinchStartDist = 0, pinchStartScale = 1, panLast = null;
-  function dist(a,b){ return Math.hypot(a.x-b.x, a.y-b.y); }
-  function pts(){ return [...pointers.values()]; }
-
+  const dist = (a,b)=>Math.hypot(a.x-b.x, a.y-b.y);
+  const pts = ()=>[...pointers.values()];
   stage.addEventListener('pointerdown', (e)=>{
-    if(e.target.closest('#zoomCtl')) return;
+    if(e.target.closest('#zoomCtl') || e.target.closest('.hud-bubble a')) return;
     stage.setPointerCapture(e.pointerId);
     pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
     const p = pts();
@@ -1199,17 +1173,10 @@ document.getElementById('botCards').addEventListener('click', (e)=>{
     if(!pointers.has(e.pointerId)) return;
     pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
     const p = pts();
-    if(p.length===2){
-      const d = dist(p[0],p[1])||1;
-      cam.mode='floor';
-      cam.scale = Math.max(0.35, Math.min(3.2, pinchStartScale * (d/pinchStartDist)));
-      applyCamera(false); return;
-    }
+    if(p.length===2){ const d = dist(p[0],p[1])||1; zoomBy((pinchStartScale*(d/pinchStartDist))/cam.scale, false); return; }
     if(p.length===1 && panLast){
-      cam.x += e.clientX - panLast.x;
-      cam.y += e.clientY - panLast.y;
-      panLast = {x:e.clientX, y:e.clientY};
-      applyCamera(false);
+      cam.mode='floor'; cam.x += e.clientX - panLast.x; cam.y += e.clientY - panLast.y;
+      panLast = {x:e.clientX, y:e.clientY}; applyCamera(false);
     }
   });
   function endPtr(e){
@@ -1219,21 +1186,29 @@ document.getElementById('botCards').addEventListener('click', (e)=>{
   }
   stage.addEventListener('pointerup', endPtr);
   stage.addEventListener('pointercancel', endPtr);
-  stage.addEventListener('wheel', (e)=>{
-    e.preventDefault();
-    cam.mode='floor';
-    cam.scale = Math.max(0.35, Math.min(3.2, cam.scale * (e.deltaY<0?1.1:1/1.1)));
-    applyCamera(false);
-  }, {passive:false});
+  stage.addEventListener('wheel', (e)=>{ e.preventDefault(); zoomBy(e.deltaY<0?1.1:1/1.1, false); }, {passive:false});
 })();
+
+/* ---------- one animation loop: walking, Tinker's errands, cards, captions ---------- */
+let lastT = performance.now(), lastLogic = 0;
+function frame(t){
+  const dt = Math.min(0.1, Math.max(0, (t - lastT)/1000)); lastT = t;
+  if(actorsReady){
+    if(t - lastLogic > 150){ lastLogic = t; routeWorkers(); tinkerTick(Date.now()); updateCards(Date.now()); }
+    for(const n in agents) stepAgent(agents[n], dt);
+    updateActorLooks();
+    placeBubbles();
+  }
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+window.HQ = {agents, captions, setCaption, tk, taskQueue, heldNames, bubbles};  // read-only hooks for testing
 
 load();
 setInterval(load, 30000);
 setInterval(()=>{ document.getElementById('clock').textContent = nyClock(); }, 15000);
 window.addEventListener('resize', ()=>{
-  if(cam.mode==='fit') fitCamera();
-  else if(selectedTeam) zoomToTeam(selectedTeam);
-  else applyCamera(true);
+  if(cam.mode==='fit') fitCamera(); else if(selectedTeam) zoomToTeam(selectedTeam); else applyCamera(true);
 });
 </script>
 </body>
