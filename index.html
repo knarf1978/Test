@@ -16,7 +16,6 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:va
 a{color:inherit;text-decoration:none}
 button{font:inherit;cursor:pointer}
 
-/* Top status pill */
 #pill{
   position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:40;
   background:#fff;border-radius:999px;box-shadow:var(--shadow);
@@ -27,7 +26,6 @@ button{font:inherit;cursor:pointer}
 #pill .d.w{background:var(--green)} #pill .d.wait{background:var(--yellow)}
 #pill .d.err{background:var(--red)} #pill .d.rest{background:var(--grey)}
 
-/* Side panels */
 .panel{
   position:fixed;top:18px;bottom:18px;width:300px;background:var(--panel);
   border-radius:18px;box-shadow:var(--shadow);z-index:30;display:flex;flex-direction:column;
@@ -102,9 +100,8 @@ button{font:inherit;cursor:pointer}
 #msg.show{display:block}
 #msg b{display:block;font-size:16px;margin-bottom:6px}
 
-/* Stage / camera */
 #stage{
-  position:fixed;inset:0;overflow:hidden;
+  position:fixed;inset:0;overflow:hidden;touch-action:none;
   background:
     radial-gradient(1200px 600px at 50% 20%, #fff 0%, transparent 60%),
     linear-gradient(180deg,#f7f5f1 0%, #ebe7e0 100%);
@@ -115,141 +112,129 @@ button{font:inherit;cursor:pointer}
   transform-style:preserve-3d;
   transition:transform .7s cubic-bezier(.2,.8,.2,1);
 }
+#camera.dragging{transition:none}
 #world{
   position:absolute;left:0;top:0;
   transform-style:preserve-3d;
-  transform: rotateX(60deg) rotateZ(-38deg);
+  transform: rotateX(58deg) rotateZ(-36deg);
 }
-
-
-/* Building — stacked multi-story cutaway */
-.building{position:absolute;transform-style:preserve-3d;left:-260px;top:-30px}
-.floor3d{
-  position:absolute;width:520px;height:340px;transform-style:preserve-3d;
-  transition:opacity .35s, filter .35s;
-  opacity:1;
+#zoomCtl{
+  position:absolute;right:14px;bottom:14px;z-index:28;
+  display:flex;gap:6px;align-items:center;
+  background:rgba(255,255,255,.92);border-radius:999px;padding:6px;
+  box-shadow:0 6px 18px rgba(0,0,0,.12),0 0 0 1px rgba(0,0,0,.04);
+  pointer-events:auto;
 }
-.floor3d.dim{opacity:.38;filter:saturate(.7)}
-.floor3d.selected{opacity:1;filter:none;z-index:5}
+#zoomCtl button{
+  min-width:40px;min-height:40px;border:0;border-radius:999px;
+  background:#111;color:#fff;font-size:16px;font-weight:700;cursor:pointer;
+  padding:0 12px;line-height:1;
+}
+#zoomCtl button:active{background:#333}
+#zoomCtl button.fit{background:#fff;color:#111;border:1px solid #ddd;font-size:13px;font-weight:750;padding:0 14px}
+#zoomCtl button.fit.on{background:#eef6ff;border-color:#5b8def;color:#1a5fb4}
+
+/* Open-plan office */
+.building{position:absolute;transform-style:preserve-3d;left:-360px;top:-40px}
+.office{
+  position:absolute;width:780px;height:520px;transform-style:preserve-3d;
+}
 .slab{
-  position:absolute;inset:0;background:#d2cec6;
-  border:1px solid #b9b4ab;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.28), 0 8px 18px rgba(0,0,0,.06);
-  transform:translateZ(0);
-  border-radius:2px;
+  position:absolute;inset:0;background:#d5d1c9;
+  border:1px solid #b9b4ab;border-radius:3px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.28), 0 10px 22px rgba(0,0,0,.06);
 }
 .wall-back,.wall-left{
   position:absolute;background:linear-gradient(180deg,#efece6,#ddd8cf);
   border:1px solid #c7c2b8;
 }
-.wall-back{
-  left:0;right:0;height:110px;bottom:100%;
-  transform-origin:bottom;transform:rotateX(-90deg);transform-style:preserve-3d;
-}
-.wall-left{
-  top:0;bottom:0;width:110px;right:100%;
-  transform-origin:right;transform:rotateY(90deg);
-}
+.wall-back{left:0;right:0;height:92px;bottom:100%;transform-origin:bottom;transform:rotateX(-90deg)}
+.wall-left{top:0;bottom:0;width:92px;right:100%;transform-origin:right;transform:rotateY(90deg)}
 .wall-back::after,.wall-left::after{
-  content:"";position:absolute;inset:14px 18px;border:1px solid rgba(0,0,0,.04);
-  background:repeating-linear-gradient(90deg,transparent,transparent 46px,rgba(0,0,0,.035) 46px,rgba(0,0,0,.035) 47px);
-}
-.pillar{
-  position:absolute;width:12px;height:12px;background:#bdb8ae;transform:translateZ(0);
-  box-shadow:0 0 0 1px #a9a398;
-}
-.pillar::before{
-  content:"";position:absolute;left:0;right:0;bottom:100%;height:110px;background:#d2cdc3;
-  transform-origin:bottom;transform:rotateX(-90deg);
+  content:"";position:absolute;inset:12px 16px;border:1px solid rgba(0,0,0,.04);
+  background:repeating-linear-gradient(90deg,transparent,transparent 48px,rgba(0,0,0,.03) 48px,rgba(0,0,0,.03) 49px);
 }
 
-/* Desk — larger */
-.desk{
-  position:absolute;width:120px;height:72px;transform-style:preserve-3d;
+.team-rug{
+  position:absolute;border-radius:18px;opacity:.55;
+  border:2px dashed rgba(0,0,0,.08);transform:translateZ(1px);
 }
+.team-label{
+  position:absolute;transform:translateZ(2px) rotateZ(36deg) rotateX(-58deg);
+  background:#fff;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:800;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);white-space:nowrap;pointer-events:none;
+}
+
+/* Glass corner office for Tinker */
+.glass-office{
+  position:absolute;width:210px;height:170px;transform-style:preserve-3d;left:18px;top:18px;
+}
+.glass-office .gfloor{
+  position:absolute;inset:0;background:rgba(180,210,240,.22);
+  border:2px solid rgba(120,160,200,.55);border-radius:6px;transform:translateZ(1px);
+}
+.glass-office .gback,.glass-office .gleft,.glass-office .gright{
+  position:absolute;background:linear-gradient(180deg,rgba(190,220,245,.35),rgba(160,195,230,.18));
+  border:1.5px solid rgba(100,150,200,.45);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);
+}
+.glass-office .gback{left:0;right:0;height:70px;bottom:100%;transform-origin:bottom;transform:rotateX(-90deg)}
+.glass-office .gleft{top:0;bottom:0;width:70px;right:100%;transform-origin:right;transform:rotateY(90deg)}
+.glass-office .gright{top:0;bottom:0;width:70px;left:100%;transform-origin:left;transform:rotateY(-90deg);opacity:.55}
+.glass-office .gtag{
+  position:absolute;left:12px;top:8px;transform:translateZ(4px) rotateZ(36deg) rotateX(-58deg);
+  background:#111;color:#fff;font-size:10px;font-weight:750;padding:3px 8px;border-radius:999px;
+}
+
+.desk{position:absolute;width:110px;height:68px;transform-style:preserve-3d}
 .desk .top{
   position:absolute;inset:0;background:linear-gradient(135deg,#f6ead4,#e5d0ae);
   border:1px solid #d2b98f;border-radius:4px;
-  box-shadow:0 1px 0 rgba(255,255,255,.55) inset;
-  transform:translateZ(28px);
+  box-shadow:0 1px 0 rgba(255,255,255,.55) inset;transform:translateZ(26px);
 }
-.desk .leg{
-  position:absolute;width:7px;height:7px;background:#2a2a2a;bottom:0;
-  transform:translateZ(0);
-}
-.desk .leg::before{
-  content:"";position:absolute;left:0;right:0;bottom:100%;height:28px;background:#1c1c1c;
-  transform-origin:bottom;transform:rotateX(-90deg);
-}
+.desk .leg{position:absolute;width:7px;height:7px;background:#2a2a2a;bottom:0;transform:translateZ(0)}
+.desk .leg::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:26px;background:#1c1c1c;transform-origin:bottom;transform:rotateX(-90deg)}
 .desk .leg.a{left:6px;top:6px}.desk .leg.b{right:6px;top:6px}
 .desk .leg.c{left:6px;bottom:6px}.desk .leg.d{right:6px;bottom:6px}
-.desk .base{
-  position:absolute;inset:0;background:#eceae6;border:1px solid #d8d4cc;border-radius:3px;
-}
-.monitor{
-  position:absolute;width:48px;height:6px;left:50%;top:10px;margin-left:-24px;
-  transform-style:preserve-3d;transform:translateZ(28px);
-}
+.desk .base{position:absolute;inset:0;background:#eceae6;border:1px solid #d8d4cc;border-radius:3px}
+.monitor{position:absolute;width:44px;height:6px;left:50%;top:10px;margin-left:-22px;transform-style:preserve-3d;transform:translateZ(26px)}
 .monitor .screen{
-  position:absolute;left:0;right:0;bottom:0;height:36px;background:#1a1f2a;
-  border:1px solid #0d1118;border-radius:3px 3px 1px 1px;
-  transform-origin:bottom;transform:rotateX(-78deg);
-  box-shadow:inset 0 0 0 1px #3a7bd5, 0 0 10px rgba(58,123,213,.4);
+  position:absolute;left:0;right:0;bottom:0;height:32px;background:#1a1f2a;
+  border:1px solid #0d1118;border-radius:3px;transform-origin:bottom;transform:rotateX(-78deg);
+  box-shadow:inset 0 0 0 1px #3a7bd5, 0 0 10px rgba(58,123,213,.35);
 }
-.monitor .stand{
-  position:absolute;left:50%;margin-left:-5px;width:10px;height:8px;background:#333;top:0;
-  transform:translateZ(0);
-}
-.chair{
-  position:absolute;width:38px;height:38px;transform-style:preserve-3d;
-}
-.chair .seat{
-  position:absolute;inset:5px;background:#1a1a1a;border-radius:4px;transform:translateZ(16px);
-}
-.chair .back{
-  position:absolute;left:5px;right:5px;height:28px;bottom:100%;margin-bottom:-5px;background:#111;
-  border-radius:4px 4px 0 0;transform-origin:bottom;transform:rotateX(-90deg) translateZ(5px);
-}
+.monitor .stand{position:absolute;left:50%;margin-left:-5px;width:10px;height:8px;background:#333;top:0}
+.chair{position:absolute;width:36px;height:36px;transform-style:preserve-3d}
+.chair .seat{position:absolute;inset:5px;background:#1a1a1a;border-radius:4px;transform:translateZ(14px)}
+.chair .back{position:absolute;left:5px;right:5px;height:26px;bottom:100%;margin-bottom:-5px;background:#111;border-radius:4px 4px 0 0;transform-origin:bottom;transform:rotateX(-90deg) translateZ(5px)}
 
-/* Bot figure — ~3x larger, billboarded */
 .bot3d{
-  position:absolute;width:96px;height:96px;transform-style:preserve-3d;
-  transform:translateZ(46px);
+  position:absolute;width:90px;height:90px;transform-style:preserve-3d;
+  transform:translateZ(44px);
   pointer-events:none;
+  transition:left .9s linear, top .9s linear;
 }
+.bot3d.walking{transition:left 1.1s linear, top 1.1s linear}
 .bot3d .fig{
-  position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;
-  transform:rotateZ(38deg) rotateX(-60deg);
-  transform-style:preserve-3d;
+  position:absolute;left:50%;top:50%;width:78px;height:78px;margin:-39px 0 0 -39px;
+  transform:rotateZ(36deg) rotateX(-58deg);
 }
-.bot3d.working .fig{animation:bob 1.1s ease-in-out infinite}
-@keyframes bob{
-  0%,100%{transform:rotateZ(38deg) rotateX(-60deg) translateY(0)}
-  50%{transform:rotateZ(38deg) rotateX(-60deg) translateY(-10px)}
-}
-.bot3d .body-shape{
-  width:84px;height:84px;position:relative;filter:drop-shadow(0 4px 3px rgba(0,0,0,.22));
-}
-.bot3d .body-shape svg{width:84px;height:84px;display:block}
-.bot3d .eyes{position:absolute;left:0;right:0;top:34px;display:flex;justify-content:center;gap:14px;pointer-events:none}
-.bot3d .eyes i{width:8px;height:8px;border-radius:50%;background:#111;display:block;box-shadow:0 0 0 1px rgba(255,255,255,.25)}
+.bot3d.working .fig, .bot3d.typing .fig{animation:bob 1.1s ease-in-out infinite}
+.bot3d.walking .fig{animation:walkbob .45s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:rotateZ(36deg) rotateX(-58deg) translateY(0)}50%{transform:rotateZ(36deg) rotateX(-58deg) translateY(-9px)}}
+@keyframes walkbob{0%,100%{transform:rotateZ(36deg) rotateX(-58deg) translateY(0)}50%{transform:rotateZ(36deg) rotateX(-58deg) translateY(-6px)}}
+.bot3d .body-shape{width:78px;height:78px;position:relative;filter:drop-shadow(0 4px 3px rgba(0,0,0,.22))}
+.bot3d .body-shape svg{width:78px;height:78px;display:block}
+.bot3d .eyes{position:absolute;left:0;right:0;top:30px;display:flex;justify-content:center;gap:12px}
+.bot3d .eyes i{width:7px;height:7px;border-radius:50%;background:#111;display:block}
 .bot3d .acc{position:absolute;pointer-events:none}
-.bot3d .acc.glasses{
-  left:14px;top:30px;width:56px;height:16px;border:3px solid #222;border-radius:4px;background:transparent;
-}
-.bot3d .acc.glasses::before,.bot3d .acc.glasses::after{
-  content:"";position:absolute;top:0;width:22px;height:16px;border-right:3px solid #222;
-}
+.bot3d .acc.glasses{left:12px;top:28px;width:54px;height:15px;border:3px solid #222;border-radius:4px}
+.bot3d .acc.glasses::before,.bot3d .acc.glasses::after{content:"";position:absolute;top:0;width:20px;height:15px;border-right:3px solid #222}
 .bot3d .acc.glasses::before{left:0}.bot3d .acc.glasses::after{right:0;border-right:0;border-left:3px solid #222}
-.bot3d .acc.antenna{
-  left:50%;margin-left:-2px;top:-22px;width:4px;height:26px;background:#333;border-radius:2px;
-}
-.bot3d .acc.antenna::after{
-  content:"";position:absolute;left:-5px;top:-8px;width:14px;height:14px;border-radius:50%;background:#E5484D;
-  box-shadow:0 0 0 2px #fff;
-}
+.bot3d .acc.antenna{left:50%;margin-left:-2px;top:-20px;width:4px;height:24px;background:#333;border-radius:2px}
+.bot3d .acc.antenna::after{content:"";position:absolute;left:-5px;top:-7px;width:14px;height:14px;border-radius:50%;background:#E5484D;box-shadow:0 0 0 2px #fff}
 .bot3d .sdot{
-  position:absolute;left:50%;top:-22px;width:20px;height:20px;margin-left:-10px;border-radius:50%;
+  position:absolute;left:50%;top:-20px;width:18px;height:18px;margin-left:-9px;border-radius:50%;
   border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.28);z-index:3;
 }
 .bot3d .sdot.working{background:var(--green)}
@@ -257,138 +242,7 @@ button{font:inherit;cursor:pointer}
 .bot3d .sdot.error{background:var(--red)}
 .bot3d .sdot.done,.bot3d .sdot.idle{background:var(--grey)}
 
-/* Speech bubbles — large, camera-facing */
-.bubble-wrap{
-  position:absolute;left:48px;top:-70px;width:0;height:0;
-  transform:rotateZ(38deg) rotateX(-60deg);
-  z-index:20;pointer-events:none;
-}
-.bubble{
-  position:absolute;left:50%;bottom:0;transform:translate(-50%,-12px) scale(.85);
-  transform-origin:bottom center;
-  background:#fff;color:#111;border-radius:14px;padding:10px 14px;font-size:13px;font-weight:700;
-  box-shadow:0 10px 28px rgba(0,0,0,.16), 0 0 0 1px rgba(0,0,0,.04);
-  white-space:nowrap;max-width:220px;
-  opacity:0;z-index:9;
-  overflow:hidden;text-overflow:ellipsis;
-}
-.bubble.show{animation:pop .38s cubic-bezier(.2,1.4,.4,1) forwards;pointer-events:none}
-@keyframes pop{
-  0%{opacity:0;transform:translate(-50%,-4px) scale(.55)}
-  100%{opacity:1;transform:translate(-50%,-12px) scale(1)}
-}
-.bubble::after{
-  content:"";position:absolute;left:50%;bottom:-6px;margin-left:-6px;width:12px;height:12px;background:#fff;
-  transform:rotate(45deg);box-shadow:2px 2px 4px rgba(0,0,0,.05);
-}
-.bubble.need{
-  white-space:normal;text-align:center;padding:12px 14px;min-width:150px;max-width:200px;
-  pointer-events:auto;
-}
-.bubble.need.show{pointer-events:auto}
-.bubble.need .who{font-size:13px;margin-bottom:8px;line-height:1.25}
-.bubble.need .btn{pointer-events:auto}
-
-.floor-label{
-  position:absolute;left:0;top:50%;
-  transform:translate(-118%,-50%) rotateZ(38deg) rotateX(-60deg);
-  background:#fff;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:800;
-  box-shadow:0 6px 16px rgba(0,0,0,.12);white-space:nowrap;pointer-events:none;
-  border:2px solid transparent;
-}
-.floor3d.selected .floor-label{border-color:currentColor;box-shadow:0 8px 20px rgba(0,0,0,.16)}
-
-.empty-hint{
-  position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);
-  color:#8a857c;font-size:14px;text-align:center;z-index:5;pointer-events:none;
-}
-
-
-@media (max-width:1100px){
-  .panel{width:260px}
-  #left{left:10px}#right{right:10px}
-}
-
-/* ===== Mobile (<700px): stacked, touch-friendly ===== */
-@media (max-width:699px){
-  html,body{height:auto;min-height:100%;overflow:auto;-webkit-overflow-scrolling:touch}
-  body{padding:0 0 28px}
-
-  #pill{
-    position:sticky;top:0;left:0;transform:none;width:100%;
-    border-radius:0;justify-content:space-around;gap:8px;padding:12px 8px;
-    font-size:12px;z-index:60;box-shadow:0 2px 10px rgba(0,0,0,.06);
-  }
-  #pill .c{gap:5px;flex-direction:column;align-items:center;text-align:center;font-weight:650;font-size:11px}
-  #pill .d{width:9px;height:9px}
-
-  .panel{
-    position:static;width:auto;margin:12px 12px 0;border-radius:16px;
-    max-height:none;overflow:visible;box-shadow:0 6px 18px rgba(20,20,20,.06);
-  }
-  #left,#right{left:auto;right:auto;top:auto;bottom:auto}
-
-  /* Office stage between pill and panels via flex order on body children:
-     We reorder with CSS: stage first after pill, then left, then right */
-  #stage{
-    position:relative;inset:auto;height:45vh;min-height:280px;max-height:420px;margin:12px;border-radius:16px;
-    overflow:hidden;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04);
-    touch-action:pan-y;
-  }
-  #camera{top:58%}
-  #world{transform: rotateX(60deg) rotateZ(-38deg)}
-  .building{left:-240px;top:-10px}
-  .empty-hint{font-size:13px;padding:0 20px}
-  .floor3d.dim{opacity:.22}
-  .bubble{font-size:12px;padding:8px 11px}
-  .bubble.need{min-width:130px}
-
-  #msg{position:fixed;left:12px;right:12px;top:auto;bottom:24px;transform:none;max-width:none;z-index:70}
-
-  .panel .head{padding:14px 14px 10px}
-  .panel .head h1{font-size:17px}
-  .panel .body{padding:8px 10px 14px;overflow:visible}
-  .floor-row,.wait-row,.bot-card,.fin-row,.rt-row,.act-row{
-    padding:12px 12px;min-height:44px;border-radius:14px;
-  }
-  .btn,.btn.sm{min-height:40px;padding:10px 14px;font-size:13px;border-radius:12px}
-  .sec{padding:10px 4px;font-size:12px;min-height:40px}
-  .badge{padding:4px 10px;font-size:12px}
-  .icon2d{width:32px;height:32px}
-  .icon2d svg{width:28px;height:28px}
-  .status-dot{width:10px;height:10px}
-  .usage{padding:14px}
-  .bar{height:14px}
-  #right .floor-band{margin:0;border-radius:16px 16px 0 0;padding:14px 14px 12px}
-  #right .head{padding:0;border:0}
-
-  /* Mobile section stacking order via display:contents wrapper trick:
-     Keep DOM order: pill, left, right, stage, msg — reorder with flex on body */
-  body{
-    display:flex;flex-direction:column;align-items:stretch;
-  }
-  #pill{order:1}
-  #stage{order:2}
-  #left{order:3}
-  #right{order:4}
-  #msg{order:5}
-
-  /* On mobile, collapse heavy sections by default via a class toggled in JS;
-     CSS marks which start collapsed on small screens if .mobile-init applied */
-  #right .body{padding-top:4px}
-  .bubble.need{min-width:120px;padding:10px}
-  .bubble-wrap{pointer-events:auto}
-  .bot3d .fig{/* larger tap feel */}
-  .floor-label{font-size:10px;padding:4px 8px}
-}
-
-@media (max-width:399px){
-  #stage{height:42vh;min-height:260px;margin:10px}
-  #camera{top:58%}
-  #pill{gap:4px;padding:10px 4px;font-size:10px}
-  #pill .c{font-size:10px}
-}
-
+.empty-hint{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);color:#8a857c;font-size:14px;text-align:center;z-index:5;pointer-events:none}
 
 #bubbleLayer{position:absolute;inset:0;pointer-events:none;z-index:25;overflow:visible}
 .hud-bubble{
@@ -407,8 +261,43 @@ button{font:inherit;cursor:pointer}
 .hud-bubble.need{white-space:normal;text-align:center;min-width:148px;padding:12px 14px;pointer-events:auto}
 .hud-bubble.need .who{margin-bottom:8px;font-size:13px}
 .hud-bubble .btn{pointer-events:auto}
+.hud-bubble.check{font-size:12px;padding:8px 12px;background:#111;color:#fff}
+.hud-bubble.check::after{background:#111}
 @keyframes hudpop{0%{opacity:0;transform:translate(-50%,-90%) scale(.7)}100%{opacity:1;transform:translate(-50%,-100%) scale(1)}}
 
+@media (max-width:699px){
+  html,body{height:auto;min-height:100%;overflow:auto;-webkit-overflow-scrolling:touch}
+  body{padding:0 0 28px;display:flex;flex-direction:column;align-items:stretch}
+  #pill{
+    position:sticky;top:0;left:0;transform:none;width:100%;order:1;
+    border-radius:0;justify-content:space-around;gap:8px;padding:12px 8px;
+    font-size:12px;z-index:60;box-shadow:0 2px 10px rgba(0,0,0,.06);
+  }
+  #pill .c{gap:5px;flex-direction:column;align-items:center;text-align:center;font-weight:650;font-size:11px}
+  #pill .d{width:9px;height:9px}
+  .panel{position:static;width:auto;margin:12px 12px 0;border-radius:16px;max-height:none;overflow:visible;box-shadow:0 6px 18px rgba(20,20,20,.06)}
+  #left{order:3} #right{order:4}
+  #stage{
+    position:relative;inset:auto;order:2;height:45vh;min-height:280px;max-height:420px;margin:12px;border-radius:16px;
+    overflow:hidden;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04);touch-action:none;
+  }
+  #camera{top:58%}
+  #zoomCtl{right:10px;bottom:10px}
+  #zoomCtl button{min-width:44px;min-height:44px}
+  #msg{position:fixed;left:12px;right:12px;top:auto;bottom:24px;transform:none;max-width:none;z-index:70;order:5}
+  .panel .head{padding:14px 14px 10px}
+  .panel .head h1{font-size:17px}
+  .panel .body{padding:8px 10px 14px;overflow:visible}
+  .floor-row,.wait-row,.bot-card,.fin-row,.rt-row,.act-row{padding:12px;min-height:44px;border-radius:14px}
+  .btn,.btn.sm{min-height:40px;padding:10px 14px;font-size:13px;border-radius:12px}
+  .sec{padding:10px 4px;font-size:12px;min-height:40px}
+  #right .floor-band{margin:0;border-radius:16px 16px 0 0;padding:14px}
+  #right .head{padding:0;border:0}
+}
+@media (max-width:399px){
+  #stage{height:42vh;min-height:260px;margin:10px}
+  #pill{gap:4px;padding:10px 4px;font-size:10px}
+}
 </style>
 </head>
 <body>
@@ -425,7 +314,7 @@ button{font:inherit;cursor:pointer}
     <div class="sub"><span class="live-dot" id="liveDot"></span><span id="liveLabel">Live</span> · <span id="clock">--:--</span></div>
   </div>
   <div class="body">
-    <div class="sec" data-sec="floors">Floors <span class="chev">▾</span></div>
+    <div class="sec" data-sec="floors">Teams <span class="chev">▾</span></div>
     <div class="sec-body" id="floorList"></div>
 
     <div class="sec" data-sec="waiting">Waiting on me <span class="chev">▾</span></div>
@@ -445,9 +334,9 @@ button{font:inherit;cursor:pointer}
 <aside id="right" class="panel">
   <div class="head" style="padding:0;border:0">
     <div class="floor-band" id="floorBand">
-      <div class="kicker">Selected floor</div>
-      <h2 id="rbName">—</h2>
-      <div class="meta" id="rbMeta">Pick a floor</div>
+      <div class="kicker">Office roster</div>
+      <h2 id="rbName">All bots</h2>
+      <div class="meta" id="rbMeta">—</div>
     </div>
   </div>
   <div class="body" id="botCards"></div>
@@ -462,42 +351,49 @@ button{font:inherit;cursor:pointer}
 <div id="stage">
   <div id="camera"><div id="world"><div class="building" id="building"></div></div></div>
   <div class="empty-hint" id="emptyHint" style="display:none">No bots yet — waiting for the first status line.</div>
-<div id="bubbleLayer" aria-hidden="false"></div>
+  <div id="bubbleLayer" aria-hidden="false"></div>
+  <div id="zoomCtl" aria-label="Office zoom">
+    <button type="button" id="zoomOut" title="Zoom out">−</button>
+    <button type="button" id="zoomFit" class="fit on" title="Show whole office">Fit</button>
+    <button type="button" id="zoomIn" title="Zoom in">+</button>
+  </div>
 </div>
 <div id="msg"></div>
 
 <script>
 const DEMO = new URLSearchParams(location.search).has('demo');
+const FORCE_WALK = new URLSearchParams(location.search).has('walk'); // screenshot helper
 const topic = DEMO ? '' : location.hash.slice(1);
-
 const FLOOR_COLORS = ['#5b8def','#14C16F','#FD690F','#9B59B6','#E5484D','#1E86FC','#F59312'];
+const SUPERVISOR = 'Tinker';
+const OFFICE = {w:780, h:520};
+const TINKER_DESK = {x:55, y:55}; // inside glass office
+const TINKER_DOOR = {x:200, y:150};
 
 const st = {roster:[], groups:{}, chat:{}, looks:{}, status:{}, routines:{}, usage:null, activity:[]};
-let selectedFloor = null;
-let camY = 0;
+let selectedTeam = null;
+const cam = {
+  mode: (window.matchMedia('(max-width:699px)').matches ? 'fit' : 'fit'),
+  scale: 1, x: 0, y: 0
+};
+const deskPos = {}; // bot -> {x,y} desk origin
+let tinkerState = {mode:'sit', target:null, checkUntil:0, route:[], routeIdx:0};
+let walkTimer = null;
+let lastBuildSig = '';
 
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function statusLabel(s){
   return ({working:'Working',waiting_user:'Waiting',error:'Error',done:'Done',idle:'Idle'})[s]||(s||'Unknown');
 }
-function resting(s){return !s || s==='done' || s==='idle'}
+function isNarrow(){ return window.matchMedia('(max-width:699px)').matches; }
 
 function shapeSVG(shape, color, size){
   const c = color || '#959595';
   const s = size || 28;
-  if(shape==='star4'){
-    return `<svg viewBox="0 0 28 28" width="${s}" height="${s}"><path fill="${esc(c)}" d="M14 1.5 L17.2 10.8 L27 14 L17.2 17.2 L14 26.5 L10.8 17.2 L1 14 L10.8 10.8 Z"/></svg>`;
-  }
-  if(shape==='hexagon'){
-    return `<svg viewBox="0 0 28 28" width="${s}" height="${s}"><path fill="${esc(c)}" d="M14 2 L25 8.5 L25 19.5 L14 26 L3 19.5 L3 8.5 Z"/></svg>`;
-  }
-  if(shape==='square'){
-    return `<svg viewBox="0 0 28 28" width="${s}" height="${s}"><rect x="4" y="4" width="20" height="20" rx="4" fill="${esc(c)}"/></svg>`;
-  }
-  if(shape==='triangle'){
-    return `<svg viewBox="0 0 28 28" width="${s}" height="${s}"><path fill="${esc(c)}" d="M14 3 L26 24 L2 24 Z"/></svg>`;
-  }
-  // drop (default)
+  if(shape==='star4') return `<svg viewBox="0 0 28 28" width="${s}" height="${s}"><path fill="${esc(c)}" d="M14 1.5 L17.2 10.8 L27 14 L17.2 17.2 L14 26.5 L10.8 17.2 L1 14 L10.8 10.8 Z"/></svg>`;
+  if(shape==='hexagon') return `<svg viewBox="0 0 28 28" width="${s}" height="${s}"><path fill="${esc(c)}" d="M14 2 L25 8.5 L25 19.5 L14 26 L3 19.5 L3 8.5 Z"/></svg>`;
+  if(shape==='square') return `<svg viewBox="0 0 28 28" width="${s}" height="${s}"><rect x="4" y="4" width="20" height="20" rx="4" fill="${esc(c)}"/></svg>`;
+  if(shape==='triangle') return `<svg viewBox="0 0 28 28" width="${s}" height="${s}"><path fill="${esc(c)}" d="M14 3 L26 24 L2 24 Z"/></svg>`;
   return `<svg viewBox="0 0 28 28" width="${s}" height="${s}"><path fill="${esc(c)}" d="M14 2 C14 2 24 12 24 17.5 A10 10 0 0 1 4 17.5 C4 12 14 2 14 2 Z"/></svg>`;
 }
 
@@ -516,82 +412,149 @@ function apply(d, time){
   }
 }
 
-function floorsMap(){
-  const floors = {};
+function teamsMap(){
+  const teams = {};
   for(const b of st.roster){
     const g = st.groups[b] || 'Other';
-    (floors[g] = floors[g] || []).push(b);
+    (teams[g] = teams[g] || []).push(b);
   }
-  // stable order: Ops, Testing, then alpha, Other last
   const prefer = ['Ops','Testing'];
-  const keys = Object.keys(floors).sort((a,b)=>{
-    const ia = prefer.indexOf(a), ib = prefer.indexOf(b);
+  const keys = Object.keys(teams).sort((a,b)=>{
     if(a==='Other') return 1; if(b==='Other') return -1;
-    if(ia>=0 || ib>=0) return (ia<0?99:ia) - (ib<0?99:ib);
+    const ia=prefer.indexOf(a), ib=prefer.indexOf(b);
+    if(ia>=0||ib>=0) return (ia<0?99:ia)-(ib<0?99:ib);
     return a.localeCompare(b);
   });
-  return {floors, keys};
+  return {teams, keys};
 }
 
+function workers(){ return st.roster.filter(b=>b!==SUPERVISOR); }
+function activeWorkers(){
+  return workers().filter(b=>{
+    const s=(st.status[b]||{}).status;
+    return s==='working'||s==='waiting_user'||s==='error';
+  });
+}
 function nyTime(ts){
-  try{
-    return new Date(ts*1000).toLocaleTimeString('en-US',{timeZone:'America/New_York',hour:'2-digit',minute:'2-digit',hour12:false});
-  }catch(e){return '--:--'}
+  try{return new Date(ts*1000).toLocaleTimeString('en-US',{timeZone:'America/New_York',hour:'2-digit',minute:'2-digit',hour12:false});}
+  catch(e){return '--:--'}
 }
 function nyClock(){
-  try{
-    return new Date().toLocaleTimeString('en-US',{timeZone:'America/New_York',hour:'2-digit',minute:'2-digit',hour12:false});
-  }catch(e){return '--:--'}
+  try{return new Date().toLocaleTimeString('en-US',{timeZone:'America/New_York',hour:'2-digit',minute:'2-digit',hour12:false});}
+  catch(e){return '--:--'}
 }
 function resetsIn(iso){
   if(!iso) return '—';
   const t = new Date(iso).getTime() - Date.now();
   if(isNaN(t)) return '—';
   if(t<=0) return 'soon';
-  const d = Math.floor(t/86400000), h = Math.floor((t%86400000)/3600000);
+  const d=Math.floor(t/86400000), h=Math.floor((t%86400000)/3600000);
   return d>0 ? `${d}d ${h}h` : `${h}h`;
 }
-
 function counts(){
   let w=0,wait=0,err=0,rest=0;
   for(const b of st.roster){
-    const s = (st.status[b]||{}).status;
-    if(s==='working') w++;
-    else if(s==='waiting_user') wait++;
-    else if(s==='error') err++;
-    else rest++;
+    const s=(st.status[b]||{}).status;
+    if(s==='working') w++; else if(s==='waiting_user') wait++; else if(s==='error') err++; else rest++;
   }
   return {w,wait,err,rest};
 }
 
-function deskPositions(n){
-  // roomy grid on 520x340 slab
-  const cols = Math.min(3, Math.max(1,n));
-  const rows = Math.ceil(n/cols);
-  const out = [];
-  let i=0;
-  for(let r=0;r<rows;r++){
-    for(let c=0;c<cols;c++){
-      if(i>=n) break;
-      const x = 70 + c * ((520-160)/Math.max(cols,1)) + (r%2)*16;
-      const y = 55 + r * ((340-110)/Math.max(rows,1));
-      out.push({x,y}); i++;
+function layoutDesks(){
+  // Assign desk positions: Tinker in glass office; workers in team clusters on open floor
+  const {teams, keys} = teamsMap();
+  const pos = {};
+  pos[SUPERVISOR] = {x:TINKER_DESK.x, y:TINKER_DESK.y, seat:{x:TINKER_DESK.x+18, y:TINKER_DESK.y+8}};
+  // Worker area starts right of glass office
+  let clusterX = 250;
+  const clusterY0 = 40;
+  keys.forEach((g, ti)=>{
+    const bots = (teams[g]||[]).filter(b=>b!==SUPERVISOR);
+    if(!bots.length && !(teams[g]||[]).includes(SUPERVISOR)) {
+      // empty team of only supervisor already placed
     }
+    const cols = Math.min(3, Math.max(1, bots.length));
+    bots.forEach((name,i)=>{
+      const c = i % cols;
+      const r = Math.floor(i / cols);
+      const x = clusterX + c * 150;
+      const y = clusterY0 + r * 150 + (ti%2)*20;
+      pos[name] = {x, y, seat:{x:x+18, y:y+6}, team:g, teamIdx:ti};
+    });
+    const rows = Math.max(1, Math.ceil(bots.length/cols));
+    // next cluster to the right, wrap down if needed
+    clusterX += cols * 150 + 40;
+    if(clusterX > 620){ clusterX = 250; }
+  });
+  // Any unknown workers without team assignment leftover
+  workers().forEach((name,i)=>{
+    if(pos[name]) return;
+    pos[name] = {x:260 + (i%4)*150, y:220 + Math.floor(i/4)*150, seat:{x:0,y:0}, team:'Other'};
+    pos[name].seat = {x:pos[name].x+18, y:pos[name].y+6};
+  });
+  Object.keys(pos).forEach(k=>{ deskPos[k]=pos[k]; });
+  return pos;
+}
+
+function deskHTML(x,y){
+  return `<div class="desk" style="left:${x}px;top:${y}px"><div class="base"></div><div class="leg a"></div><div class="leg b"></div><div class="leg c"></div><div class="leg d"></div><div class="top"></div><div class="monitor"><div class="stand"></div><div class="screen"></div></div></div>`+
+    `<div class="chair" style="left:${x+38}px;top:${y+64}px"><div class="seat"></div><div class="back"></div></div>`;
+}
+
+function botHTML(name, x, y, extraCls){
+  const look = st.looks[name]||{};
+  const s = st.status[name];
+  const status = s ? s.status : 'idle';
+  const step = s ? (s.step||'') : '';
+  const chat = st.chat[name]||'';
+  const cls = ['bot3d', extraCls||'', status==='working'?'working':''].filter(Boolean).join(' ');
+  return `<div class="${cls}" id="bot-${esc(name).replace(/\s+/g,'_')}" style="left:${x}px;top:${y}px" data-bot="${esc(name)}" data-status="${esc(status)}" data-step="${esc(step)}" data-chat="${esc(chat)}">`+
+    `<div class="fig"><div class="body-shape">${shapeSVG(look.shape, look.color, 78)}`+
+    (look.accessory==='glasses'?`<div class="acc glasses"></div>`:'')+
+    (look.accessory==='antenna'?`<div class="acc antenna"></div>`:'')+
+    `<div class="eyes"><i></i><i></i></div></div><div class="sdot ${esc(status)}"></div></div></div>`;
+}
+
+function applyCamera(animate){
+  const el = document.getElementById('camera');
+  if(!el) return;
+  if(animate===false) el.classList.add('dragging'); else el.classList.remove('dragging');
+  el.style.transform = 'translate(-50%,-50%) translate(' + cam.x + 'px, ' + cam.y + 'px) scale(' + cam.scale + ')';
+  const fitBtn = document.getElementById('zoomFit');
+  if(fitBtn) fitBtn.classList.toggle('on', cam.mode==='fit');
+  requestAnimationFrame(()=>requestAnimationFrame(placeBubbles));
+}
+function fitZoomScale(){ return isNarrow() ? 0.62 : 0.95; }
+function teamZoomScale(){ return isNarrow() ? 1.15 : 1.55; }
+function fitCamera(){
+  cam.mode = 'fit';
+  cam.scale = fitZoomScale();
+  cam.x = isNarrow() ? 10 : 24;
+  cam.y = isNarrow() ? 20 : 30;
+  applyCamera(true);
+}
+function zoomToTeam(team){
+  cam.mode = 'floor';
+  cam.scale = teamZoomScale();
+  // Center roughly on team cluster
+  const members = (teamsMap().teams[team]||[]).filter(b=>b!==SUPERVISOR);
+  if(members.length){
+    const xs = members.map(b=>deskPos[b]?.x||0);
+    const ys = members.map(b=>deskPos[b]?.y||0);
+    const cx = xs.reduce((a,b)=>a+b,0)/xs.length;
+    const cy = ys.reduce((a,b)=>a+b,0)/ys.length;
+    cam.x = 40 - (cx - OFFICE.w/2) * 0.15;
+    cam.y = 20 - (cy - OFFICE.h/2) * 0.2;
+  } else {
+    cam.x = 16; cam.y = 20;
   }
-  return out;
+  applyCamera(true);
 }
-
-function setCameraToFloor(idx, keysLen){
-  const story = 170;
-  const narrow = window.matchMedia('(max-width:699px)').matches;
-  const scale = narrow ? (window.innerWidth<400 ? 1.25 : 1.45) : 1.85;
-  const mid = (keysLen - 1) / 2;
-  const camY = (mid - idx) * story * 0.85;
-  const camX = narrow ? 0 : 16;
-  document.getElementById('camera').style.transform =
-    'translate(-50%,-50%) translate(' + camX + 'px, ' + camY + 'px) scale(' + scale + ')';
+function nudgeZoom(factor){
+  cam.mode = 'floor';
+  cam.scale = Math.max(0.35, Math.min(3.2, cam.scale * factor));
+  applyCamera(true);
 }
-
 
 function placeBubbles(){
   const layer = document.getElementById('bubbleLayer');
@@ -604,11 +567,11 @@ function placeBubbles(){
     const step = el.getAttribute('data-step')||'';
     const chat = el.getAttribute('data-chat')||'';
     const name = el.getAttribute('data-bot')||'';
-    // Prefer selected-floor bots; still show others if visible
-    const floor = el.closest('.floor3d');
-    const onSelected = floor && floor.classList.contains('selected');
+    const checking = el.classList.contains('checking');
     let body = '';
-    if(status==='waiting_user'){
+    if(checking){
+      body = `<div class="hud-bubble check">👀 checking…</div>`;
+    } else if(status==='waiting_user'){
       body = `<div class="hud-bubble need"><div class="who">${esc(name)} needs you</div>`+
         (chat?`<a class="btn sm" href="${esc(chat)}">Open chat</a>`:'')+`</div>`;
     } else if(status==='working' && step){
@@ -616,13 +579,10 @@ function placeBubbles(){
     } else if(status==='error' && step){
       body = `<div class="hud-bubble" style="color:#E5484D">${esc(step)}</div>`;
     } else return;
-    // Always show waiting on any floor; working/error prefer selected but show if on-screen
-    if(!onSelected && status!=='waiting_user' && status!=='working') return;
     const r = el.getBoundingClientRect();
     if(r.width<2 || r.height<2) return;
     const x = r.left + r.width/2 - sr.left;
     const y = r.top - sr.top - 8;
-    // Keep on stage horizontally
     const cx = Math.max(70, Math.min(sr.width-70, x));
     const cy = Math.max(24, y);
     out += `<div style="position:absolute;left:${cx}px;top:${cy}px;pointer-events:none">${body}</div>`;
@@ -630,107 +590,237 @@ function placeBubbles(){
   layer.innerHTML = out;
 }
 
-function renderBuilding(){
-  const {floors, keys} = floorsMap();
+function buildSig(){
+  return JSON.stringify({
+    roster:st.roster, groups:st.groups, looks:st.looks,
+    status:Object.fromEntries(Object.entries(st.status).map(([k,v])=>[k,v.status+'|'+v.step]))
+  });
+}
+
+function renderBuilding(force){
+  const sig = buildSig();
   const b = document.getElementById('building');
   const hint = document.getElementById('emptyHint');
-  if(!keys.length){ b.innerHTML=''; hint.style.display='block'; return; }
+  if(!st.roster.length){ b.innerHTML=''; hint.style.display='block'; lastBuildSig=''; return; }
   hint.style.display='none';
-  if(selectedFloor==null || !keys.includes(selectedFloor)) selectedFloor = keys[0];
-  const story = 170; // wall height + slab gap; must match setCameraToFloor
-  let html = '';
-  keys.forEach((g, idx)=>{
-    const bots = floors[g];
-    // Stack as multi-story: higher index = upper floor via translateZ (up after rotateX)
-    const z = idx * story;
-    const color = FLOOR_COLORS[idx % FLOOR_COLORS.length];
-    const selected = g===selectedFloor;
-    const positions = deskPositions(bots.length);
-    html += `<div class="floor3d ${selected?'selected':'dim'}" data-floor="${esc(g)}" style="transform:translateZ(${z}px)">`;
-    html += `<div class="slab"></div>`;
-    html += `<div class="wall-back" style="border-top:4px solid ${color}"></div>`;
-    html += `<div class="wall-left" style="border-left:4px solid ${color}"></div>`;
-    [[10,10],[498,10],[10,318],[498,318]].forEach(([x,y])=>{
-      html += `<div class="pillar" style="left:${x}px;top:${y}px"></div>`;
-    });
-    html += `<div class="floor-label" style="color:${color}">${esc(g)}</div>`;
-    bots.forEach((name,i)=>{
-      const pos = positions[i] || {x:80+i*140,y:90};
-      const look = st.looks[name] || {};
-      const s = st.status[name];
-      const status = s ? s.status : 'idle';
-      const step = s ? (s.step||'') : 'no status yet';
-      const chat = st.chat[name] || '';
-      html += `<div class="desk" style="left:${pos.x}px;top:${pos.y}px">`;
-      html += `<div class="base"></div>`;
-      html += `<div class="leg a"></div><div class="leg b"></div><div class="leg c"></div><div class="leg d"></div>`;
-      html += `<div class="top"></div>`;
-      html += `<div class="monitor"><div class="stand"></div><div class="screen"></div></div>`;
-      html += `</div>`;
-      html += `<div class="chair" style="left:${pos.x+40}px;top:${pos.y+68}px"><div class="seat"></div><div class="back"></div></div>`;
-      const workingCls = status==='working' ? ' working' : '';
-      html += `<div class="bot3d${workingCls}" style="left:${pos.x+12}px;top:${pos.y-8}px" data-bot="${esc(name)}" data-status="${esc(status)}" data-step="${esc(step)}" data-chat="${esc(chat)}">`;
-      html += `<div class="fig"><div class="body-shape">${shapeSVG(look.shape, look.color, 84)}`;
-      if(look.accessory==='glasses') html += `<div class="acc glasses"></div>`;
-      if(look.accessory==='antenna') html += `<div class="acc antenna"></div>`;
-      html += `<div class="eyes"><i></i><i></i></div></div>`;
-      html += `<div class="sdot ${esc(status)}"></div></div>`;
-      // speech bubbles drawn in #bubbleLayer (screen space) via placeBubbles()
-      html += `</div>`;
-    });
-    html += `</div>`;
+
+  // Only rebuild DOM when roster/looks/desks change meaningfully; status-only updates patch in place when possible
+  const needRebuild = force || sig !== lastBuildSig;
+  // Always rebuild for simplicity + correctness with looks/desks (lean enough for few bots)
+  lastBuildSig = sig;
+  const pos = layoutDesks();
+  const {teams, keys} = teamsMap();
+
+  let html = `<div class="office">`;
+  html += `<div class="slab"></div><div class="wall-back"></div><div class="wall-left"></div>`;
+
+  // Glass office
+  html += `<div class="glass-office"><div class="gfloor"></div><div class="gback"></div><div class="gleft"></div><div class="gright"></div><div class="gtag">Supervisor</div></div>`;
+
+  // Team rugs + labels
+  keys.forEach((g, ti)=>{
+    const members = (teams[g]||[]).filter(b=>b!==SUPERVISOR);
+    if(!members.length) return;
+    const xs = members.map(n=>pos[n].x);
+    const ys = members.map(n=>pos[n].y);
+    const minx = Math.min(...xs)-20, miny = Math.min(...ys)-16;
+    const maxx = Math.max(...xs)+130, maxy = Math.max(...ys)+120;
+    const color = FLOOR_COLORS[ti % FLOOR_COLORS.length];
+    html += `<div class="team-rug" data-team="${esc(g)}" style="left:${minx}px;top:${miny}px;width:${maxx-minx}px;height:${maxy-miny}px;background:${color}33;border-color:${color}66"></div>`;
+    html += `<div class="team-label" style="left:${minx+8}px;top:${miny+4}px;color:${color}">${esc(g)}</div>`;
   });
+
+  // Desks for everyone
+  st.roster.forEach(name=>{
+    const p = pos[name]; if(!p) return;
+    html += deskHTML(p.x, p.y);
+  });
+
+  // Worker bots at desks
+  workers().forEach(name=>{
+    const p = pos[name]; if(!p) return;
+    html += botHTML(name, p.seat.x, p.seat.y, '');
+  });
+
+  // Tinker — start at desk (walk loop will move)
+  const tp = pos[SUPERVISOR] || TINKER_DESK;
+  const tExtra = (st.status[SUPERVISOR]||{}).status==='working' ? 'typing' : '';
+  html += botHTML(SUPERVISOR, tp.seat.x, tp.seat.y, tExtra);
+  html += `</div>`;
   b.innerHTML = html;
-  const idx = keys.indexOf(selectedFloor);
-  setCameraToFloor(idx, keys.length);
-  requestAnimationFrame(()=>requestAnimationFrame(placeBubbles));
+
+  if(cam.mode==='fit') fitCamera();
+  else if(selectedTeam) zoomToTeam(selectedTeam);
+  else fitCamera();
+
+  ensureTinkerLoop();
+  // Demo/walk: jump mid-check for screenshot
+  if((DEMO || FORCE_WALK) && activeWorkers().length){
+    const aw = activeWorkers()[0];
+    const p = deskPos[aw];
+    const tel = document.getElementById('bot-Tinker');
+    if(tel && p){
+      tel.style.transition = 'none';
+      tel.style.left = (p.x + 95) + 'px';
+      tel.style.top = (p.y + 10) + 'px';
+      tel.classList.add('walking','checking');
+      tel.classList.remove('typing','working');
+      tinkerState = {mode:'check', target:aw, checkUntil:Date.now()+3000, route:activeWorkers().slice(), routeIdx:0};
+      requestAnimationFrame(()=>requestAnimationFrame(placeBubbles));
+    }
+  }
+}
+
+function moveTinkerTo(x, y, walking){
+  const el = document.getElementById('bot-Tinker');
+  if(!el) return;
+  el.classList.toggle('walking', !!walking);
+  el.classList.toggle('checking', tinkerState.mode==='check');
+  el.classList.toggle('typing', !walking && (st.status[SUPERVISOR]||{}).status==='working' && tinkerState.mode==='sit');
+  el.style.left = x + 'px';
+  el.style.top = y + 'px';
+}
+
+function ensureTinkerLoop(){
+  if(walkTimer) return;
+  walkTimer = setInterval(tickTinker, 400);
+}
+
+function tickTinker(){
+  const el = document.getElementById('bot-Tinker');
+  if(!el) return;
+  const active = activeWorkers();
+  const now = Date.now();
+
+  // Screenshot lock: keep mid-walk pose while ?walk or first demo seconds — actually continuous OK
+
+  if(tinkerState.mode==='check'){
+    if(now < tinkerState.checkUntil){
+      el.classList.add('checking');
+      placeBubbles();
+      return;
+    }
+    // next target
+    tinkerState.routeIdx++;
+    if(tinkerState.routeIdx >= tinkerState.route.length){
+      // rebuild route from current active
+      tinkerState.route = active.slice();
+      tinkerState.routeIdx = 0;
+    }
+    if(!tinkerState.route.length){
+      tinkerState.mode = 'return';
+      tinkerState.target = null;
+      moveTinkerTo(TINKER_DOOR.x, TINKER_DOOR.y, true);
+      setTimeout(()=>{
+        if(tinkerState.mode!=='return') return;
+        moveTinkerTo(TINKER_DESK.x+18, TINKER_DESK.y+8, true);
+        setTimeout(()=>{
+          tinkerState.mode='sit';
+          moveTinkerTo(TINKER_DESK.x+18, TINKER_DESK.y+8, false);
+          el.classList.remove('checking','walking');
+          placeBubbles();
+        }, 1000);
+      }, 1000);
+      return;
+    }
+    tinkerState.mode = 'walk';
+    tinkerState.target = tinkerState.route[tinkerState.routeIdx];
+  }
+
+  if(!active.length && tinkerState.mode!=='sit' && tinkerState.mode!=='return'){
+    tinkerState.mode = 'return';
+    tinkerState.target = null;
+    moveTinkerTo(TINKER_DOOR.x, TINKER_DOOR.y, true);
+    setTimeout(()=>{
+      moveTinkerTo(TINKER_DESK.x+18, TINKER_DESK.y+8, true);
+      setTimeout(()=>{
+        tinkerState.mode='sit';
+        moveTinkerTo(TINKER_DESK.x+18, TINKER_DESK.y+8, false);
+        el.classList.remove('checking','walking');
+        placeBubbles();
+      }, 1100);
+    }, 1100);
+    return;
+  }
+
+  if(active.length && (tinkerState.mode==='sit' || tinkerState.mode==='return')){
+    tinkerState.route = active.slice();
+    tinkerState.routeIdx = 0;
+    tinkerState.mode = 'walk';
+    tinkerState.target = tinkerState.route[0];
+    moveTinkerTo(TINKER_DOOR.x, TINKER_DOOR.y, true);
+    setTimeout(()=>{
+      if(tinkerState.mode!=='walk') return;
+      goCheckCurrent();
+    }, 1000);
+    return;
+  }
+
+  if(tinkerState.mode==='walk' && tinkerState.target){
+    // if already moving, wait for arrival via check kickoff
+    goCheckCurrent();
+  }
+
+  // Sitting: typing bob if Tinker working
+  if(tinkerState.mode==='sit'){
+    const ts = (st.status[SUPERVISOR]||{}).status;
+    el.classList.toggle('typing', ts==='working');
+    el.classList.toggle('working', ts==='working');
+  }
+}
+
+function goCheckCurrent(){
+  const name = tinkerState.target;
+  const p = deskPos[name];
+  if(!p){ tinkerState.mode='sit'; return; }
+  tinkerState.mode = 'walk';
+  moveTinkerTo(p.x + 95, p.y + 10, true);
+  setTimeout(()=>{
+    if(tinkerState.target!==name) return;
+    tinkerState.mode = 'check';
+    tinkerState.checkUntil = Date.now() + 3000;
+    const el = document.getElementById('bot-Tinker');
+    if(el){ el.classList.add('checking'); el.classList.remove('walking'); }
+    placeBubbles();
+  }, 1200);
 }
 
 function renderPanels(){
-  const {floors, keys} = floorsMap();
+  const {teams, keys} = teamsMap();
   const c = counts();
   document.getElementById('c-work').textContent = `${c.w} working`;
   document.getElementById('c-wait').textContent = `${c.wait} waiting`;
   document.getElementById('c-err').textContent = `${c.err} errors`;
   document.getElementById('c-rest').textContent = `${c.rest} resting`;
 
-  // floors list
   let fh='';
   keys.forEach((g,i)=>{
-    const bots = floors[g];
+    const bots = teams[g]||[];
     const working = bots.filter(b=>(st.status[b]||{}).status==='working').length;
     const color = FLOOR_COLORS[i % FLOOR_COLORS.length];
-    const active = g===selectedFloor ? ' active' : '';
-    fh += `<div class="floor-row${active}" data-floor="${esc(g)}">
+    const active = g===selectedTeam ? ' active' : '';
+    fh += `<div class="floor-row${active}" data-team="${esc(g)}">
       <span class="floor-swatch" style="background:${color}"></span>
       <div class="floor-meta"><div class="n">${esc(g)}</div><div class="m">${working} working · ${bots.length} bots</div></div>
       <span class="badge">${working}/${bots.length}</span></div>`;
   });
-  document.getElementById('floorList').innerHTML = fh || `<div style="padding:8px;color:#999;font-size:12px">No floors yet</div>`;
+  document.getElementById('floorList').innerHTML = fh || `<div style="padding:8px;color:#999;font-size:12px">No teams yet</div>`;
 
-  // waiting
   const waiting = st.roster.filter(b=>(st.status[b]||{}).status==='waiting_user');
   document.getElementById('waitList').innerHTML = waiting.length ? waiting.map(b=>{
-    const chat = st.chat[b]||'';
-    const look = st.looks[b]||{};
-    return `<div class="wait-row">
-      <div class="icon2d">${shapeSVG(look.shape, look.color, 24)}</div>
+    const chat=st.chat[b]||''; const look=st.looks[b]||{};
+    return `<div class="wait-row"><div class="icon2d">${shapeSVG(look.shape,look.color,24)}</div>
       <div class="floor-meta"><div class="n">${esc(b)}</div><div class="m">${esc((st.status[b]||{}).step||'needs you')}</div></div>
-      ${chat?`<a class="btn sm" href="${esc(chat)}">Open chat</a>`:''}
-    </div>`;
+      ${chat?`<a class="btn sm" href="${esc(chat)}">Open chat</a>`:''}</div>`;
   }).join('') : `<div style="padding:8px;color:#999;font-size:12px">Nobody waiting</div>`;
 
-  // finished
   const finished = st.roster.filter(b=>{const s=(st.status[b]||{}).status; return s==='done'||s==='idle'});
   document.getElementById('finList').innerHTML = finished.length ? finished.map(b=>{
     const look=st.looks[b]||{}; const s=st.status[b]||{};
-    return `<div class="fin-row" data-chat="${esc(st.chat[b]||'')}">
-      <div class="icon2d">${shapeSVG(look.shape,look.color,22)}</div>
-      <div class="floor-meta"><div class="n">${esc(b)}</div><div class="m">${esc(statusLabel(s.status))} · ${esc(s.step||'')}</div></div>
-    </div>`;
+    return `<div class="fin-row" data-chat="${esc(st.chat[b]||'')}"><div class="icon2d">${shapeSVG(look.shape,look.color,22)}</div>
+      <div class="floor-meta"><div class="n">${esc(b)}</div><div class="m">${esc(statusLabel(s.status))} · ${esc(s.step||'')}</div></div></div>`;
   }).join('') : `<div style="padding:8px;color:#999;font-size:12px">None yet</div>`;
 
-  // routines
   let rh='';
   for(const [bot, items] of Object.entries(st.routines)){
     (items||[]).forEach(it=>{
@@ -739,43 +829,33 @@ function renderPanels(){
   }
   document.getElementById('rtList').innerHTML = rh || `<div style="padding:8px;color:#999;font-size:12px">No routines posted</div>`;
 
-  // activity
   document.getElementById('actList').innerHTML = st.activity.length ? st.activity.slice(0,20).map(a=>
     `<div class="act-row"><div class="t">${nyTime(a.time)}</div><div class="txt"><b>${esc(a.bot)}</b> ${esc(statusLabel(a.status).toLowerCase())}${a.step?` — ${esc(a.step)}`:''}</div></div>`
   ).join('') : `<div style="padding:8px;color:#999;font-size:12px">No activity yet</div>`;
 
-  // right panel
-  if(selectedFloor && floors[selectedFloor]){
-    const idx = keys.indexOf(selectedFloor);
-    const color = FLOOR_COLORS[idx % FLOOR_COLORS.length];
-    const bots = floors[selectedFloor];
-    const working = bots.filter(b=>(st.status[b]||{}).status==='working').length;
-    document.getElementById('floorBand').style.background = `linear-gradient(135deg,${color},${shade(color,-25)})`;
-    document.getElementById('rbName').textContent = selectedFloor;
-    document.getElementById('rbMeta').textContent = `${working} working · Floor ${idx+1} · ${bots.length} bot${bots.length===1?'':'s'}`;
-    document.getElementById('botCards').innerHTML = bots.map(b=>{
-      const look=st.looks[b]||{}; const s=st.status[b]||{}; const chat=st.chat[b]||'';
-      return `<div class="bot-card" data-chat="${esc(chat)}">
-        <div class="icon2d">${shapeSVG(look.shape,look.color,26)}</div>
-        <div class="info"><div class="n">${esc(b)}</div><div class="m">${esc(statusLabel(s.status)||'No status')} · ${esc(s.step||'—')}</div></div>
-        <span class="status-dot ${esc(s.status||'idle')}"></span>
-      </div>`;
-    }).join('');
-  } else {
-    document.getElementById('rbName').textContent = '—';
-    document.getElementById('rbMeta').textContent = 'No floor selected';
-    document.getElementById('botCards').innerHTML = '';
-  }
+  // Right panel: ALL bots
+  const workingN = st.roster.filter(b=>(st.status[b]||{}).status==='working').length;
+  document.getElementById('rbName').textContent = selectedTeam || 'All bots';
+  document.getElementById('rbMeta').textContent = `${workingN} working · ${st.roster.length} bot${st.roster.length===1?'':'s'}`;
+  const showList = selectedTeam ? (teams[selectedTeam]||[]) : st.roster.slice();
+  // Keep supervisor first if present
+  showList.sort((a,b)=> (a===SUPERVISOR?-1:0) - (b===SUPERVISOR?-1:0) || a.localeCompare(b));
+  document.getElementById('botCards').innerHTML = showList.map(b=>{
+    const look=st.looks[b]||{}; const s=st.status[b]||{}; const chat=st.chat[b]||'';
+    const role = b===SUPERVISOR ? 'Supervisor · ' : '';
+    return `<div class="bot-card" data-chat="${esc(chat)}">
+      <div class="icon2d">${shapeSVG(look.shape,look.color,26)}</div>
+      <div class="info"><div class="n">${esc(b)}</div><div class="m">${role}${esc(statusLabel(s.status)||'No status')} · ${esc(s.step||'—')}</div></div>
+      <span class="status-dot ${esc(s.status||'idle')}"></span></div>`;
+  }).join('');
 
-  // usage
   const u = st.usage;
   if(u){
     const pct = Number(u.total_used_pct)||0;
     document.getElementById('usagePct').textContent = `${pct}%`;
     document.getElementById('usageBar').style.width = Math.max(0,Math.min(100,pct))+'%';
     document.getElementById('usageReset').textContent = `Resets in ${resetsIn(u.resets_at)}`;
-    const bots = u.bots || {};
-    document.getElementById('usageLB').innerHTML = Object.entries(bots)
+    document.getElementById('usageLB').innerHTML = Object.entries(u.bots||{})
       .sort((a,b)=>Number(b[1])-Number(a[1]))
       .map(([k,v])=>`<div class="row"><span>${esc(k)}</span><span>${esc(v)}%</span></div>`).join('');
   } else {
@@ -784,16 +864,6 @@ function renderPanels(){
     document.getElementById('usageReset').textContent = 'Resets —';
     document.getElementById('usageLB').innerHTML = '';
   }
-}
-
-function shade(hex, pct){
-  try{
-    const n = hex.replace('#','');
-    const num = parseInt(n.length===3?n.split('').map(c=>c+c).join(''):n,16);
-    let r=(num>>16)+pct,g=(num>>8&255)+pct,b=(num&255)+pct;
-    r=Math.max(0,Math.min(255,r)); g=Math.max(0,Math.min(255,g)); b=Math.max(0,Math.min(255,b));
-    return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);
-  }catch(e){return hex}
 }
 
 function render(){
@@ -807,20 +877,16 @@ function showMsg(title, body){
   el.classList.add('show');
 }
 function hideMsg(){ document.getElementById('msg').classList.remove('show'); }
-
 function resetState(){
   for(const k of ['groups','chat','looks','status','routines']) st[k]={};
   st.roster=[]; st.usage=null; st.activity=[];
 }
-
 function ingestLines(lines){
   resetState();
   for(const line of lines){
     if(!line) continue;
     let m; try{m=JSON.parse(line)}catch(e){continue}
     if(m.event && m.event!=='message') continue;
-    const raw = m.message != null ? m.message : (typeof m==='object' && !m.event ? null : null);
-    // support both ntfy envelope and raw demo objects
     if(m.event==='message'){
       try{ apply(JSON.parse(m.message), m.time || Math.floor(Date.now()/1000)); }catch(e){}
     }
@@ -873,26 +939,19 @@ async function load(){
   }
 }
 
-// events
 document.getElementById('left').addEventListener('click', (e)=>{
   const sec = e.target.closest('.sec');
-  if(sec){
-    const body = sec.nextElementSibling;
-    sec.classList.toggle('collapsed');
-    body.classList.toggle('collapsed');
-    return;
-  }
+  if(sec){ const body=sec.nextElementSibling; sec.classList.toggle('collapsed'); body.classList.toggle('collapsed'); return; }
   const fr = e.target.closest('.floor-row');
   if(fr){
-    selectedFloor = fr.getAttribute('data-floor');
-    render();
+    selectedTeam = fr.getAttribute('data-team');
+    cam.mode = 'floor';
+    renderPanels();
+    zoomToTeam(selectedTeam);
     return;
   }
   const fin = e.target.closest('.fin-row');
-  if(fin){
-    const chat = fin.getAttribute('data-chat');
-    if(chat) location.href = chat;
-  }
+  if(fin){ const chat=fin.getAttribute('data-chat'); if(chat) location.href=chat; }
 });
 document.getElementById('botCards').addEventListener('click', (e)=>{
   const card = e.target.closest('.bot-card');
@@ -901,40 +960,66 @@ document.getElementById('botCards').addEventListener('click', (e)=>{
   if(chat) location.href = chat;
 });
 
-
-// Mobile: swipe office to change floors; larger hit targets already in CSS
+// Zoom / pan / pinch / wheel
 (function(){
   const stage = document.getElementById('stage');
-  let sx=0, sy=0, tracking=false;
-  function floorKeys(){ return floorsMap().keys; }
-  function goFloor(delta){
-    const keys = floorKeys();
-    if(!keys.length) return;
-    let i = Math.max(0, keys.indexOf(selectedFloor));
-    i = (i + delta + keys.length) % keys.length;
-    selectedFloor = keys[i];
-    render();
-  }
-  stage.addEventListener('touchstart', (e)=>{
-    if(e.touches.length!==1) return;
-    tracking=true; sx=e.touches[0].clientX; sy=e.touches[0].clientY;
-  }, {passive:true});
-  stage.addEventListener('touchend', (e)=>{
-    if(!tracking) return; tracking=false;
-    const t=e.changedTouches[0];
-    const dx=t.clientX-sx, dy=t.clientY-sy;
-    if(Math.abs(dx)<40 || Math.abs(dx)<Math.abs(dy)) return;
-    goFloor(dx<0 ? 1 : -1);
-  }, {passive:true});
-})();
+  document.getElementById('zoomIn').addEventListener('click', (e)=>{ e.stopPropagation(); nudgeZoom(1.2); });
+  document.getElementById('zoomOut').addEventListener('click', (e)=>{ e.stopPropagation(); nudgeZoom(1/1.2); });
+  document.getElementById('zoomFit').addEventListener('click', (e)=>{ e.stopPropagation(); selectedTeam=null; fitCamera(); renderPanels(); });
 
-// On narrow screens, collapse Finished/Routines/Activity defaults already set;
-// also collapse right-panel usage leaderboard noise by ensuring Activity starts open on mobile only via CSS.
+  let pointers = new Map();
+  let pinchStartDist = 0, pinchStartScale = 1, panLast = null;
+  function dist(a,b){ return Math.hypot(a.x-b.x, a.y-b.y); }
+  function pts(){ return [...pointers.values()]; }
+
+  stage.addEventListener('pointerdown', (e)=>{
+    if(e.target.closest('#zoomCtl')) return;
+    stage.setPointerCapture(e.pointerId);
+    pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
+    const p = pts();
+    if(p.length===1) panLast = {x:e.clientX, y:e.clientY};
+    if(p.length===2){ pinchStartDist = dist(p[0],p[1])||1; pinchStartScale = cam.scale; panLast=null; }
+  });
+  stage.addEventListener('pointermove', (e)=>{
+    if(!pointers.has(e.pointerId)) return;
+    pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
+    const p = pts();
+    if(p.length===2){
+      const d = dist(p[0],p[1])||1;
+      cam.mode='floor';
+      cam.scale = Math.max(0.35, Math.min(3.2, pinchStartScale * (d/pinchStartDist)));
+      applyCamera(false); return;
+    }
+    if(p.length===1 && panLast){
+      cam.x += e.clientX - panLast.x;
+      cam.y += e.clientY - panLast.y;
+      panLast = {x:e.clientX, y:e.clientY};
+      applyCamera(false);
+    }
+  });
+  function endPtr(e){
+    pointers.delete(e.pointerId);
+    if(pointers.size===0){ panLast=null; document.getElementById('camera').classList.remove('dragging'); }
+    else if(pointers.size===1){ const only=pts()[0]; panLast={x:only.x,y:only.y}; }
+  }
+  stage.addEventListener('pointerup', endPtr);
+  stage.addEventListener('pointercancel', endPtr);
+  stage.addEventListener('wheel', (e)=>{
+    e.preventDefault();
+    cam.mode='floor';
+    cam.scale = Math.max(0.35, Math.min(3.2, cam.scale * (e.deltaY<0?1.1:1/1.1)));
+    applyCamera(false);
+  }, {passive:false});
+})();
 
 load();
 setInterval(load, 30000);
 setInterval(()=>{ document.getElementById('clock').textContent = nyClock(); }, 15000);
-window.addEventListener('resize', ()=>{ const {keys}=floorsMap(); if(keys.length){ setCameraToFloor(Math.max(0,keys.indexOf(selectedFloor)), keys.length); requestAnimationFrame(()=>requestAnimationFrame(placeBubbles)); } });
+window.addEventListener('resize', ()=>{
+  if(cam.mode==='fit') fitCamera();
+  else if(selectedTeam) zoomToTeam(selectedTeam);
+  else applyCamera(true);
+});
 </script>
 </body>
 </html>
