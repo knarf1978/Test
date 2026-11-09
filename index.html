@@ -384,7 +384,9 @@ let tinkerState = {mode:'sit', target:null, checkUntil:0, route:[], routeIdx:0};
 let walkTimer = null;
 let lastBuildSig = '';
 const pageLoadAt = Date.now();
-const seenVisitIds = new Set();
+const seenVisitIds = (()=>{ try{ return new Set(JSON.parse(localStorage.getItem('hqSeenVisits')||'[]')); }catch(e){ return new Set(); } })();
+function saveSeenVisits(){ try{ localStorage.setItem('hqSeenVisits', JSON.stringify(Array.from(seenVisitIds).slice(-200))); }catch(e){} }
+const seenVisitLog = new Set();
 let visitQueue = [];
 let tinkerPos = {x: TINKER_DESK.x + 18, y: TINKER_DESK.y + 8};
 function botDomId(name){ return 'bot-' + String(name).replace(/\s+/g, '_'); }
@@ -841,8 +843,9 @@ function considerVisit(d, msgId, time){
   if(d.visit==null || d.visit==='') return;
   const msgMs = (Number(time)||0) * 1000;
   // Only react to visits newer than page load minus 10 minutes
-  if(msgMs && msgMs < pageLoadAt - 10*60*1000) return;
   const id = msgId || ('t' + String(time||'') + ':' + String(d.visit));
+  if(seenVisitLog.has(id)) return; // already logged this message
+  seenVisitLog.add(id);
   const targets = [];
   if(String(d.visit).toLowerCase() === 'all'){
     workers().forEach(w => targets.push(w));
@@ -856,8 +859,9 @@ function considerVisit(d, msgId, time){
     st.activity.unshift({bot:SUPERVISOR, status:'checked', step:'checked on '+name, kind:'visit', visitTarget:name, time:ts});
   }
   if(st.activity.length>40) st.activity.length=40;
-  if(seenVisitIds.has(id)) return; // already animated this message
-  seenVisitIds.add(id);
+  if(seenVisitIds.has(id)) return; // already animated this message (persists across reloads)
+  seenVisitIds.add(id); saveSeenVisits();
+  if(msgMs && msgMs < pageLoadAt - 2*60*1000) return; // old check-in: log it, don't replay it
   for(const name of targets) visitQueue.push(name);
   // tickTinker / post-render kick will start the walk once desks exist
 }
