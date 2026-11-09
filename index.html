@@ -703,7 +703,28 @@ function routeWorkers(){
 }
 
 /* ---------- Tinker: visits, assignments, rounds ---------- */
-const tk = {task:null, roundIdx:0};
+const tk = {task:null};
+/* Tinker plays cards when he is idle/done and a worker is at the card table; otherwise he sits at his desk. */
+function tinkerWantsTable(){
+  if(isDeskStatus(effStatus(SUPERVISOR).status)) return false;
+  return workers().some(n=> breakSeat[n]!=null && BREAK_SPOTS[breakSeat[n]].table && !isDeskStatus(effStatus(n, heldNames.has(n)).status));
+}
+function tinkerRestLoc(){
+  if(!tinkerWantsTable()){ delete breakSeat[SUPERVISOR]; return homeLoc(); }
+  if(breakSeat[SUPERVISOR]==null){
+    const used = new Set(Object.values(breakSeat));
+    let free = BREAK_SPOTS.findIndex((sp,i)=> sp.table && !used.has(i));
+    if(free < 0){
+      // table full: the worker in the last table seat moves to the couch, Tinker takes the chair
+      const bumped = workers().filter(n=>breakSeat[n]!=null && BREAK_SPOTS[breakSeat[n]].table).sort((a,b)=>breakSeat[b]-breakSeat[a])[0];
+      free = breakSeat[bumped];
+      const couch = BREAK_SPOTS.findIndex((sp,i)=> !sp.table && !used.has(i));
+      breakSeat[bumped] = couch >= 0 ? couch : BREAK_SPOTS.length-1;
+    }
+    breakSeat[SUPERVISOR] = free;
+  }
+  return breakLoc(breakSeat[SUPERVISOR]);
+}
 function setCaption(name, text, kind){ if(text==null) delete captions[name]; else captions[name] = {text, kind}; }
 function releaseHold(name){
   const c = (heldNames.get(name)||0) - 1;
@@ -719,21 +740,17 @@ function tinkerTick(now){
   const T = agents[SUPERVISOR]; if(!T || !T.placed) return;
   if(!tk.task){
     if(taskQueue.length){
-      const t = taskQueue.shift();
+      let qi = taskQueue.findIndex(q=>q.type!=='check'); if(qi < 0) qi = 0;
+      const t = taskQueue.splice(qi,1)[0];
       if(!agents[t.target]){ releaseHold(t.target); return; }
       tk.task = {...t, phase:'walk', tries:0}; return;
     }
-    const act = activeWorkers().filter(n=>agents[n]);
-    if(act.length){
-      const name = act[tk.roundIdx % act.length]; tk.roundIdx++;
-      tk.task = {type:'check', target:name, phase:'walk', tries:0}; return;
-    }
-    goTo(T, homeLoc());
+    goTo(T, tinkerRestLoc());   // no errands: his desk, or a seat at the card table
     return;
   }
   const t = tk.task, A = agents[t.target];
   if(!A){ endTask(); return; }
-  if(t.type==='check' && taskQueue.length){ endTask(); return; }   // a visit / new job beats routine rounds
+  if(t.type==='check' && t.phase==='walk' && taskQueue.some(q=>q.type!=='check')){ taskQueue.push({type:'check', target:t.target}); tk.task = null; return; }   // a visit / new job goes first
   if(t.phase==='walk'){
     if(t.type==='check' && !isDeskStatus(effStatus(t.target).status)){ endTask(); return; }
     const want = besideLocFor(t.target);
@@ -741,7 +758,7 @@ function tinkerTick(now){
     const dest = T.pending ? T.pending.key : T.key;
     if(dest !== want.key){ if(t.tries++ > 10){ endTask(); return; } goTo(T, want); return; }
     if(T.moving || A.moving) return;           // arrive, and let the bot settle, before talking
-    t.phase = 'ask'; t.until = now + (t.type==='check' ? 2500 : 3000);
+    t.phase = 'ask'; t.until = now + 3000;
     setCaption(SUPERVISOR, t.type==='assign' ? 'new job for you!' : t.type==='visit' ? 'you ok?' : '👀 checking…', t.type==='check' ? 'check' : 'ask');
     return;
   }
@@ -798,12 +815,26 @@ function considerTinkerActions(d, msgId, time){
   if(st.activity.length>40) st.activity.length=40;
 }
 
+/* One check per status change: a worker line that newly moves into working / waiting_user / error, posted after
+   the page opened (old lines are just marked seen), makes Tinker walk over once. Ids persist so reloads don't replay. */
+function considerStatusCheck(d, prev, msgId, time){
+  if(!d || !d.bot || d.bot===SUPERVISOR || !d.status) return;
+  if(!isDeskStatus(d.status) || d.status===prev) return;
+  const id = 'chk:' + (msgId || (String(time) + ':' + d.bot + ':' + d.status));
+  if(seenVisitIds.has(id)) return;
+  seenVisitIds.add(id); saveSeenVisits();
+  const ts = (Number(time)||0) * 1000;
+  if(ts && ts < pageLoadAt - 20*1000) return;            // was already like that when the page opened
+  if(taskQueue.some(q=>q.type==='check' && q.target===d.bot)) return;
+  taskQueue.push({type:'check', target:d.bot});
+}
+
 /* ---------- card table: solitaire alone, a shared hand for two or more ---------- */
 const game = {key:'', next:0, turn:0, players:[], pile:[]};
 const SUITS = ['r','b'];
 function tableSeated(){
   const out = [];
-  for(const n in agents){ const a = agents[n]; if(n===SUPERVISOR || a.moving || !a.key || a.key.indexOf('break:')!==0) continue;
+  for(const n in agents){ const a = agents[n]; if(a.moving || !a.key || a.key.indexOf('break:')!==0) continue;
     const i = Number(a.key.slice(6)); if(BREAK_SPOTS[i] && BREAK_SPOTS[i].table) out.push({name:n, i}); }
   return out.sort((x,y)=>x.i-y.i);
 }
@@ -1088,8 +1119,10 @@ function ingestLines(lines){
       try{
         const payload = JSON.parse(m.message);
         const t = m.time || Math.floor(Date.now()/1000);
+        const prevStatus = payload && payload.bot ? ((st.status[payload.bot]||{}).status || '') : '';
         apply(payload, t);
         considerTinkerActions(payload, m.id, t);
+        considerStatusCheck(payload, prevStatus, m.id, t);
       }catch(e){}
     }
   }
