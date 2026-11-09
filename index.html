@@ -263,6 +263,9 @@ button{font:inherit;cursor:pointer}
 .hud-bubble .btn{pointer-events:auto}
 .hud-bubble.check{font-size:12px;padding:8px 12px;background:#111;color:#fff}
 .hud-bubble.check::after{background:#111}
+.hud-bubble.visit-ask{background:#111;color:#fff}
+.hud-bubble.visit-ask::after{background:#111}
+.hud-bubble.visit-reply{background:#fff;color:#111}
 @keyframes hudpop{0%{opacity:0;transform:translate(-50%,-90%) scale(.7)}100%{opacity:1;transform:translate(-50%,-100%) scale(1)}}
 
 @media (max-width:699px){
@@ -380,6 +383,16 @@ const deskPos = {}; // bot -> {x,y} desk origin
 let tinkerState = {mode:'sit', target:null, checkUntil:0, route:[], routeIdx:0};
 let walkTimer = null;
 let lastBuildSig = '';
+const pageLoadAt = Date.now();
+const seenVisitIds = new Set();
+let visitQueue = [];
+let tinkerPos = {x: TINKER_DESK.x + 18, y: TINKER_DESK.y + 8};
+function botDomId(name){ return 'bot-' + String(name).replace(/\s+/g, '_'); }
+function resolveWorkerName(name){
+  const lower = String(name||'').toLowerCase();
+  return workers().find(w => w.toLowerCase() === lower) || null;
+}
+function isVisitMode(m){ return typeof m === 'string' && m.indexOf('visit_') === 0; }
 
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function statusLabel(s){
@@ -508,7 +521,7 @@ function botHTML(name, x, y, extraCls){
   const step = s ? (s.step||'') : '';
   const chat = st.chat[name]||'';
   const cls = ['bot3d', extraCls||'', status==='working'?'working':''].filter(Boolean).join(' ');
-  return `<div class="${cls}" id="bot-${esc(name).replace(/\s+/g,'_')}" style="left:${x}px;top:${y}px" data-bot="${esc(name)}" data-status="${esc(status)}" data-step="${esc(step)}" data-chat="${esc(chat)}">`+
+  return `<div class="${cls}" id="${botDomId(name)}" style="left:${x}px;top:${y}px" data-bot="${esc(name)}" data-status="${esc(status)}" data-step="${esc(step)}" data-chat="${esc(chat)}">`+
     `<div class="fig"><div class="body-shape">${shapeSVG(look.shape, look.color, 78)}`+
     (look.accessory==='glasses'?`<div class="acc glasses"></div>`:'')+
     (look.accessory==='antenna'?`<div class="acc antenna"></div>`:'')+
@@ -568,8 +581,15 @@ function placeBubbles(){
     const chat = el.getAttribute('data-chat')||'';
     const name = el.getAttribute('data-bot')||'';
     const checking = el.classList.contains('checking');
+    const visitAsk = el.classList.contains('visit-ask');
+    const visitReply = el.classList.contains('visit-reply');
+    const visitReplyText = el.getAttribute('data-visit-reply')||'';
     let body = '';
-    if(checking){
+    if(visitAsk){
+      body = `<div class="hud-bubble visit-ask">you ok?</div>`;
+    } else if(visitReply){
+      body = `<div class="hud-bubble visit-reply">${esc(visitReplyText)}</div>`;
+    } else if(checking){
       body = `<div class="hud-bubble check">👀 checking…</div>`;
     } else if(status==='waiting_user'){
       body = `<div class="hud-bubble need"><div class="who">${esc(name)} needs you</div>`+
@@ -649,13 +669,40 @@ function renderBuilding(force){
   html += `</div>`;
   b.innerHTML = html;
 
+  // Restore Tinker mid-walk / mid-visit position after DOM rebuild
+  if(tinkerState.mode !== 'sit'){
+    const tel = document.getElementById('bot-Tinker');
+    if(tel){
+      tel.style.transition = 'none';
+      tel.style.left = tinkerPos.x + 'px';
+      tel.style.top = tinkerPos.y + 'px';
+      tel.classList.toggle('walking', tinkerState.mode==='walk' || tinkerState.mode==='return' || tinkerState.mode==='visit_walk');
+      tel.classList.toggle('checking', tinkerState.mode==='check');
+      tel.classList.toggle('visit-ask', tinkerState.mode==='visit_ask');
+      tel.classList.remove('typing');
+      requestAnimationFrame(()=>{ tel.style.transition = ''; });
+    }
+    if(tinkerState.mode==='visit_reply' && tinkerState.target){
+      const wel = document.getElementById(botDomId(tinkerState.target));
+      if(wel){
+        wel.classList.add('visit-reply');
+        wel.setAttribute('data-visit-reply', truncateStep((st.status[tinkerState.target]||{}).step||''));
+      }
+    }
+  }
+
   if(cam.mode==='fit') fitCamera();
   else if(selectedTeam) zoomToTeam(selectedTeam);
   else fitCamera();
 
   ensureTinkerLoop();
+  if(visitQueue.length && !isVisitMode(tinkerState.mode)){
+    const next = visitQueue.shift();
+    const fromDesk = (tinkerState.mode==='sit' || tinkerState.mode==='return');
+    startVisitWalk(next, fromDesk);
+  }
   // Demo/walk: jump mid-check for screenshot
-  if((DEMO || FORCE_WALK) && activeWorkers().length){
+  if((DEMO || FORCE_WALK) && activeWorkers().length && !isVisitMode(tinkerState.mode) && !visitQueue.length){
     const aw = activeWorkers()[0];
     const p = deskPos[aw];
     const tel = document.getElementById('bot-Tinker');
@@ -665,6 +712,7 @@ function renderBuilding(force){
       tel.style.top = (p.y + 10) + 'px';
       tel.classList.add('walking','checking');
       tel.classList.remove('typing','working');
+      tinkerPos = {x:p.x+95, y:p.y+10};
       tinkerState = {mode:'check', target:aw, checkUntil:Date.now()+3000, route:activeWorkers().slice(), routeIdx:0};
       requestAnimationFrame(()=>requestAnimationFrame(placeBubbles));
     }
@@ -674,11 +722,144 @@ function renderBuilding(force){
 function moveTinkerTo(x, y, walking){
   const el = document.getElementById('bot-Tinker');
   if(!el) return;
+  tinkerPos = {x, y};
   el.classList.toggle('walking', !!walking);
   el.classList.toggle('checking', tinkerState.mode==='check');
+  el.classList.toggle('visit-ask', tinkerState.mode==='visit_ask');
   el.classList.toggle('typing', !walking && (st.status[SUPERVISOR]||{}).status==='working' && tinkerState.mode==='sit');
   el.style.left = x + 'px';
   el.style.top = y + 'px';
+}
+
+function clearVisitClasses(){
+  document.querySelectorAll('.visit-ask,.visit-reply').forEach(el=>{
+    el.classList.remove('visit-ask','visit-reply');
+    el.removeAttribute('data-visit-reply');
+  });
+}
+
+function truncateStep(step){
+  const s = String(step||'').trim();
+  if(!s) return 'all good 👍';
+  return s.length > 40 ? s.slice(0, 37) + '...' : s;
+}
+
+function beginVisitAsk(name){
+  tinkerState.mode = 'visit_ask';
+  tinkerState.target = name;
+  tinkerState.checkUntil = Date.now() + 4000;
+  const el = document.getElementById('bot-Tinker');
+  if(el){
+    el.classList.add('visit-ask');
+    el.classList.remove('walking','checking','typing','working');
+  }
+  placeBubbles();
+}
+
+function beginVisitReply(name){
+  tinkerState.mode = 'visit_reply';
+  tinkerState.target = name;
+  tinkerState.checkUntil = Date.now() + 4000;
+  const tel = document.getElementById('bot-Tinker');
+  if(tel) tel.classList.remove('visit-ask','walking','checking');
+  const wel = document.getElementById(botDomId(name));
+  if(wel){
+    wel.classList.add('visit-reply');
+    wel.setAttribute('data-visit-reply', truncateStep((st.status[name]||{}).step||''));
+  }
+  placeBubbles();
+}
+
+function finishVisitAndContinue(){
+  clearVisitClasses();
+  const el = document.getElementById('bot-Tinker');
+  if(visitQueue.length){
+    const next = visitQueue.shift();
+    startVisitWalk(next, false);
+    return;
+  }
+  const active = activeWorkers();
+  if(active.length){
+    // Resume rounds from current position
+    tinkerState.route = active.slice();
+    tinkerState.routeIdx = 0;
+    tinkerState.mode = 'walk';
+    tinkerState.target = active[0];
+    goCheckCurrent();
+    return;
+  }
+  tinkerState.mode = 'return';
+  tinkerState.target = null;
+  moveTinkerTo(TINKER_DOOR.x, TINKER_DOOR.y, true);
+  setTimeout(()=>{
+    if(tinkerState.mode!=='return') return;
+    moveTinkerTo(TINKER_DESK.x+18, TINKER_DESK.y+8, true);
+    setTimeout(()=>{
+      if(tinkerState.mode!=='return') return;
+      tinkerState.mode='sit';
+      moveTinkerTo(TINKER_DESK.x+18, TINKER_DESK.y+8, false);
+      if(el){ el.classList.remove('checking','walking','visit-ask'); }
+      placeBubbles();
+    }, 1100);
+  }, 1100);
+}
+
+function startVisitWalk(name, fromDesk){
+  const p = deskPos[name];
+  if(!p){
+    // bot not on floor — skip
+    if(visitQueue.length) startVisitWalk(visitQueue.shift(), fromDesk);
+    else if(!isVisitMode(tinkerState.mode)) { /* nothing */ }
+    else finishVisitAndContinue();
+    return;
+  }
+  tinkerState.mode = 'visit_walk';
+  tinkerState.target = name;
+  tinkerState.checkUntil = 0;
+  clearVisitClasses();
+  const goBeside = ()=>{
+    if(tinkerState.mode!=='visit_walk' || tinkerState.target!==name) return;
+    moveTinkerTo(p.x + 95, p.y + 10, true);
+    setTimeout(()=>{
+      if(tinkerState.mode!=='visit_walk' || tinkerState.target!==name) return;
+      beginVisitAsk(name);
+    }, 1200);
+  };
+  if(fromDesk){
+    moveTinkerTo(TINKER_DOOR.x, TINKER_DOOR.y, true);
+    setTimeout(()=>{
+      if(tinkerState.mode!=='visit_walk' || tinkerState.target!==name) return;
+      goBeside();
+    }, 1000);
+  } else {
+    goBeside();
+  }
+}
+
+function considerVisit(d, msgId, time){
+  if(!d || d.bot !== SUPERVISOR) return;
+  if(d.visit==null || d.visit==='') return;
+  const msgMs = (Number(time)||0) * 1000;
+  // Only react to visits newer than page load minus 10 minutes
+  if(msgMs && msgMs < pageLoadAt - 10*60*1000) return;
+  const id = msgId || ('t' + String(time||'') + ':' + String(d.visit));
+  const targets = [];
+  if(String(d.visit).toLowerCase() === 'all'){
+    workers().forEach(w => targets.push(w));
+  } else {
+    const name = resolveWorkerName(d.visit);
+    if(name) targets.push(name);
+  }
+  if(!targets.length) return; // named bot not on the floor
+  const ts = Number(time) || Math.floor(Date.now()/1000);
+  for(const name of targets){
+    st.activity.unshift({bot:SUPERVISOR, status:'checked', step:'checked on '+name, kind:'visit', visitTarget:name, time:ts});
+  }
+  if(st.activity.length>40) st.activity.length=40;
+  if(seenVisitIds.has(id)) return; // already animated this message
+  seenVisitIds.add(id);
+  for(const name of targets) visitQueue.push(name);
+  // tickTinker / post-render kick will start the walk once desks exist
 }
 
 function ensureTinkerLoop(){
@@ -691,6 +872,28 @@ function tickTinker(){
   if(!el) return;
   const active = activeWorkers();
   const now = Date.now();
+
+  // Visits take priority over rounds while in progress
+  if(tinkerState.mode==='visit_ask'){
+    if(now < tinkerState.checkUntil){ placeBubbles(); return; }
+    beginVisitReply(tinkerState.target);
+    return;
+  }
+  if(tinkerState.mode==='visit_reply'){
+    if(now < tinkerState.checkUntil){ placeBubbles(); return; }
+    finishVisitAndContinue();
+    return;
+  }
+  if(tinkerState.mode==='visit_walk'){
+    // waiting on walk timeouts
+    return;
+  }
+  if(visitQueue.length){
+    const next = visitQueue.shift();
+    const fromDesk = (tinkerState.mode==='sit' || tinkerState.mode==='return');
+    startVisitWalk(next, fromDesk);
+    return;
+  }
 
   // Screenshot lock: keep mid-walk pose while ?walk or first demo seconds — actually continuous OK
 
@@ -829,9 +1032,12 @@ function renderPanels(){
   }
   document.getElementById('rtList').innerHTML = rh || `<div style="padding:8px;color:#999;font-size:12px">No routines posted</div>`;
 
-  document.getElementById('actList').innerHTML = st.activity.length ? st.activity.slice(0,20).map(a=>
-    `<div class="act-row"><div class="t">${nyTime(a.time)}</div><div class="txt"><b>${esc(a.bot)}</b> ${esc(statusLabel(a.status).toLowerCase())}${a.step?` — ${esc(a.step)}`:''}</div></div>`
-  ).join('') : `<div style="padding:8px;color:#999;font-size:12px">No activity yet</div>`;
+  document.getElementById('actList').innerHTML = st.activity.length ? st.activity.slice(0,20).map(a=>{
+    if(a.kind==='visit'){
+      return `<div class="act-row"><div class="t">${nyTime(a.time)}</div><div class="txt"><b>${esc(SUPERVISOR)}</b> checked on ${esc(a.visitTarget||'')}</div></div>`;
+    }
+    return `<div class="act-row"><div class="t">${nyTime(a.time)}</div><div class="txt"><b>${esc(a.bot)}</b> ${esc(statusLabel(a.status).toLowerCase())}${a.step?` — ${esc(a.step)}`:''}</div></div>`;
+  }).join('') : `<div style="padding:8px;color:#999;font-size:12px">No activity yet</div>`;
 
   // Right panel: ALL bots
   const workingN = st.roster.filter(b=>(st.status[b]||{}).status==='working').length;
@@ -888,7 +1094,12 @@ function ingestLines(lines){
     let m; try{m=JSON.parse(line)}catch(e){continue}
     if(m.event && m.event!=='message') continue;
     if(m.event==='message'){
-      try{ apply(JSON.parse(m.message), m.time || Math.floor(Date.now()/1000)); }catch(e){}
+      try{
+        const payload = JSON.parse(m.message);
+        const t = m.time || Math.floor(Date.now()/1000);
+        apply(payload, t);
+        considerVisit(payload, m.id, t);
+      }catch(e){}
     }
   }
 }
